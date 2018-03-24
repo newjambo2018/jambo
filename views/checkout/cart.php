@@ -69,11 +69,57 @@
             </div>
         </div>
         <div class="row">
-          <div class="step-one">
-              <h2 class="heading">Шаг 1</h2>
-          </div>
+            <div class="checkout-options" style="margin-bottom: 15px;">
+              <h3>Хотите оформить заказ?</h3>
+            </div>
+            <div class="step-one">
+                <h2 class="heading">Шаг 1</h2>
+            </div>
             <div class="checkout-options">
                 <h3>Вы новый пользователь?</h3>
+                <p>Сделайте выбор..</p>
+                <ul class="nav">
+                    <li><label><input type="checkbox"> Я зарегистрирован!</label></li>
+                    <li><label><input type="checkbox"> Я новый пользователь!</label></li>
+                    <li><a href=""><i class="fa fa-times"></i>Отменить</a></li>
+                </ul>
+            </div>
+            <div class="step-one" style="margin-top: 15px;">
+                <h2 class="heading">Шаг 2</h2>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="shopper-info" style="padding-left: 20px;">
+                            <p>Информация о заказе</p>
+                            <form>
+                                <input type="text" placeholder="Имя и фамилия">
+                                <input type="email" placeholder="E-mail адрес">
+                                <input type="tel" placeholder="Номер телефона">
+                                <input type="text" placeholder="Адрес">
+                                <label>Ваш менеджер</label><select>
+                                    <option>Катя</option>
+                                    <option>Ваня</option>
+                                </select>
+                                <label>Город</label><select>
+                                    <option>Киев</option>
+                                    <option>Львов</option>
+                                </select>
+                            </form>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <a class="btn btn-default add-to-cart pull-right" href="">Оформить заказ</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="order-message">
+                            <p>Описание к заказу</p>
+                            <textarea name="message" placeholder="Добавте описание к вашему заказу!"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
