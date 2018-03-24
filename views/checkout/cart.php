@@ -52,42 +52,9 @@
 
 <section id="do_action">
     <div class="container">
-        <div class="heading">
-            <h3>Что вы хотите сделать дальше?</h3>
-            <p>Выбирете вашего менеджера по оптовым продажам!</p>
-        </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="chose_area col-xs-12">
 
-                    <ul class="user_info">
-                        <li class="single_field">
-                            <label>Ваш менеджер:</label>
-                            <select>
-                                <option>Менеджер Вася</option>
-                                <option>Менеджер Оля</option>
-                                <option>Менеджер Петя</option>
-                            </select>
-
-                        </li>
-                        <li class="single_field">
-                            <label>Ваш город:</label>
-                            <select>
-                                <option>Select</option>
-                                <option>Dhaka</option>
-                                <option>London</option>
-                                <option>Dillih</option>
-                                <option>Lahore</option>
-                                <option>Alaska</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-
-                        </li>
-
-                    </ul>
-                    <a class="btn btn-default check_out" href="/checkout">Продолжить</a>
-                </div>
             </div>
             <div class="col-sm-6">
                 <div class="total_area col-xs-12">
