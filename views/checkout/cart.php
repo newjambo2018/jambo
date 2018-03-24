@@ -35,7 +35,7 @@
                         </td>
                         <td class="cart_description">
                             <h4><a href=""><?= $item->item->name ?></a></h4>
-                            <p>Код товара: <?= $item->item->vendor_code ?></p>
+                            <p>Артикул: <?= $item->item->vendor_code ?></p>
                         </td>
                         <td class="cart_price" id="price<?= $item->id ?>">
                             <p><?= $item->item->retail_price ?> грн</p>
