@@ -79,9 +79,8 @@
                 <h3>Вы новый пользователь?</h3>
                 <p>Сделайте выбор...</p>
                 <ul class="nav">
-                    <li><label><input type="checkbox"> Я зарегистрирован!</label></li>
-                    <li><label><input type="checkbox"> Я новый пользователь!</label></li>
-                    <li><a href=""><i class="fa fa-times"></i>Отменить</a></li>
+                    <li><label><input type="radio"> Я зарегистрирован!</label></li>
+                    <li><label><input type="radio"> Я новый пользователь!</label></li>
                 </ul>
             </div>
             <div class="step-one" style="margin-top: 15px;">
