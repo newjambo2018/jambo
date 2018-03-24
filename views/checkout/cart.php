@@ -97,14 +97,22 @@
                                 <input type="email" placeholder="E-mail адрес">
                                 <input type="tel" placeholder="Номер телефона">
                                 <input type="text" placeholder="Адрес">
-                                <label>Ваш менеджер</label><select>
-                                    <option>Катя</option>
-                                    <option>Ваня</option>
-                                </select>
-                                <label>Город</label><select>
-                                    <option>Киев</option>
-                                    <option>Львов</option>
-                                </select>
+                                <ul class="user_info">
+                                    <li class="single_field">
+                                        <label>Ваш менеджер:</label>
+                                        <select>
+                                            <option>Юля</option>
+                                            <option>Антон</option>
+                                        </select>
+                                    </li>
+                                    <li class="single_field">
+                                        <label>Город:</label>
+                                        <select>
+                                            <option>Киев</option>
+                                            <option>Львов</option>
+                                        </select>
+                                    </li>
+                                </ul>
                             </form>
                         </div>
                         <div style="margin-top: 10px;">
