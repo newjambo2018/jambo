@@ -94,7 +94,6 @@
                     <ul>
                         <li>Итого: <span id="total_order_sum"></span></li>
                     </ul>
-                    <a class="btn btn-default check_out pull-right" href="/checkout">Оформить заказ</a>
                 </div>
             </div>
         </div>
