@@ -21,6 +21,13 @@
                 </tr>
                 </thead>
                 <tbody>
+                <tr class="text-center" id="empty_cart_cat" style="<?= $cart ? 'display:none;' : '' ?>">
+                    <td colspan="5">
+                        <img src="/images/404.png" alt="" width="200px" style="margin-top: 20px">
+                        <br>
+                        <span style="margin: 30px !important;font-size: 22px;display: block;">К сожалению, Ваша корзина пуста... <br><a href="/catalog">Перейти в каталог</a></span>
+                    </td>
+                </tr>
                 <? foreach ($cart as $item) { ?>
                     <tr class="inherit-cart-counter" id="cart_element_<?= $item->item->id ?>">
                         <td class="cart_product">

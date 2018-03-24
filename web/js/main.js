@@ -93,5 +93,9 @@ function update_total_sum() {
         sum += parseFloat($(this).text());  // Or this.innerHTML, this.innerText
     });
 
+    if((sum).toFixed(2) == 0) $('#empty_cart_cat').show();
+
     $('#total_order_sum').html((sum).toFixed(2) + ' грн');
+
+    console.log(sum);
 }

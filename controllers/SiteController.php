@@ -27,14 +27,16 @@ class SiteController extends CommonController
 
     public function actionTest()
     {
-        $catalog = simplexml_load_file(Yii::$app->basePath . '/common/Stock_Jambo.xml');
 
-        General::printR(((array)$catalog)['Товар']);
-
-        foreach ($catalog->Товар as $key => $value) {
-            echo $key . "\n";
-        }
+//        $catalog = simplexml_load_file(Yii::$app->basePath . '/common/Stock_Jambo.xml');
+//
+//        General::printR(((array)$catalog)['Товар']);
+//
+//        foreach ($catalog->Товар as $key => $value) {
+//            echo $key . "\n";
+//        }
     }
+
 
     public function actionIndex()
     {

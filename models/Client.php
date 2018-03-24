@@ -81,6 +81,8 @@ class Client extends \yii\db\ActiveRecord
             return false;
         }
 
+
+
         $calc = hash_pbkdf2($algo, $password, $salt, (int)$iter, 32, true);
 
         return hash_equals($calc, base64_decode($hash));
