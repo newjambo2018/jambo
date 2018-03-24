@@ -92,8 +92,7 @@
             <div class="col-sm-6">
                 <div class="total_area col-xs-12">
                     <ul>
-                        <li>Всего товаров на сумму: <span id="total_order_sum">₴59</span></li>
-                        <li>Итого: <span>₴61</span></li>
+                        <li>Итого: <span id="total_order_sum"></span></li>
                     </ul>
                     <a class="btn btn-default check_out pull-right" href="/checkout">Оформить заказ</a>
                 </div>
