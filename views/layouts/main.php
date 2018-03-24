@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="/"><img src="/images/home/logo.png" alt="Джамбо" style="width: 120px"/></a>
+                        <a href="/"><img src="/images/home/logo.png" alt="Джамбо" style="width: 150px"/></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
