@@ -70,7 +70,7 @@
         </div>
         <div class="row">
             <div class="checkout-options" style="margin-bottom: 15px;">
-              <h3>Хотите оформить заказ?</h3>
+                <h3>Хотите оформить заказ?</h3>
             </div>
             <div class="step-one">
                 <h2 class="heading">Шаг 1</h2>
@@ -114,9 +114,8 @@
                     <div class="col-sm-6">
                         <div class="order-message">
                             <p>Описание к заказу</p>
-                            <textarea name="message" placeholder="Добавте описание к вашему заказу!"></textarea>
+                            <textarea name="message" placeholder="Добавьте описание к вашему заказу!"></textarea>
                         </div>
-
                     </div>
                 </div>
 
