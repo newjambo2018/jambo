@@ -54,7 +54,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="total_area col-xs-12">
+                <div class="total_area col-sm-3 col-sm-offset-9">
                     <ul class="pull-right">
                         <li style="width: 100%">Итого: <span id="total_order_sum"></span></li>
                     </ul>
