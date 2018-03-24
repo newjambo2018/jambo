@@ -68,6 +68,11 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+          <div class="step-one">
+              <h2 class="heading">Шаг 1</h2>
+          </div>
+        </div>
     </div>
 </section><!--/#do_action-->
 
