@@ -9,6 +9,7 @@ class AuthController extends CommonController
 
     public function actionIndex()
     {
+        // TEST!
         return $this->render('index');
     }
 
