@@ -72,6 +72,9 @@
           <div class="step-one">
               <h2 class="heading">Шаг 1</h2>
           </div>
+            <div class="checkout-options">
+                <h3>Вы новый пользователь?</h3>
+            </div>
         </div>
     </div>
 </section><!--/#do_action-->
