@@ -77,7 +77,7 @@
             </div>
             <div class="checkout-options">
                 <h3>Вы новый пользователь?</h3>
-                <p>Сделайте выбор..</p>
+                <p>Сделайте выбор...</p>
                 <ul class="nav">
                     <li><label><input type="checkbox"> Я зарегистрирован!</label></li>
                     <li><label><input type="checkbox"> Я новый пользователь!</label></li>
@@ -89,7 +89,7 @@
             </div>
             <div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 col-xs-12">
                         <div class="shopper-info" style="padding-left: 20px;">
                             <p>Информация о заказе</p>
                             <form>
@@ -111,7 +111,7 @@
                             <a class="btn btn-default add-to-cart pull-right" href="">Оформить заказ</a>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 col-xs-12">
                         <div class="order-message">
                             <p>Описание к заказу</p>
                             <textarea name="message" placeholder="Добавьте описание к вашему заказу!"></textarea>
