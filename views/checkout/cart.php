@@ -55,8 +55,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="total_area col-xs-12">
-                    <ul>
-                        <li style="width: 25%">Итого: <span id="total_order_sum"></span></li>
+                    <ul class="pull-right">
+                        <li style="width: 100%">Итого: <span id="total_order_sum"></span></li>
                     </ul>
                 </div>
             </div>
