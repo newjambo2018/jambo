@@ -53,10 +53,7 @@
 <section id="do_action">
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
-
-            </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="total_area col-xs-12">
                     <ul>
                         <li>Итого: <span id="total_order_sum"></span></li>
