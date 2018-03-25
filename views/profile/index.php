@@ -30,7 +30,7 @@
                                 <div class="panel-body">
                                     <ul>
                                         <li><a href="/checkout/cart">Перейти в корзину</a></li>
-                                        <li><a href="">История заказов</a></li>
+                                        <li><a href="/profile/history">История заказов</a></li>
                                     </ul>
                                 </div>
                             </div>

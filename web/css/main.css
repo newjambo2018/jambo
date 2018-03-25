@@ -1668,7 +1668,6 @@ h2.title {
     padding-bottom: 18px !important;
 }
 
-
 .total_area span {
     float: right;
 }
@@ -2590,4 +2589,18 @@ h2.title {
 .btn-disabled {
     pointer-events: none;
     background-color: grey !important;
+}
+
+/********
+********ORDER HISTORY PAGE**********
+ */
+.delete{
+    padding-left: 15px;
+}
+.name-history{
+    color: #696763;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 30px;
 }
