@@ -150,8 +150,8 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Нет</button>
                 </div>
             </div>
-            <!-- /.modal-content -->
+            <!-- /.Модальный контент -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.Модальное окно -->
     </div>
 </div>
