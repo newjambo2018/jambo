@@ -51,7 +51,7 @@
                                 <?php endif ?>
                                 <?php if ($product->age): ?>
                                     <p><b>Возраст: </b>&nbsp;<?= $product->age ?></p>
-                                <?php endif ?>`
+                                <?php endif ?>
                                 <div class="row">
                                     <div class="col-xs-11">
                                         <div class="navigation">
