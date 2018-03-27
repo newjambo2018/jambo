@@ -5,8 +5,6 @@
                 <div class="left-sidebar">
                     <h2>Мой кабинет</h2>
                     <div class="panel-group category-products" id="accordian"><!--profile-->
-
-
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title"><a href="/profile"><i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Личные данные</a></h4>
@@ -50,21 +48,22 @@
                     <div style="text-align: center">
                         <h3>Личные данные</h3>
                     </div>
-                    <form action="#">
-                        <input type="text" placeholder="Ваше ФИО"/>
-                        <input type="tel" placeholder="Ваш номер телефона"/>
-                        <input type="email" placeholder="Ваш Email-адрес"/>
-                        <input type="password" placeholder="Ваш пароль"/>
+                    <form action="" method="post">
+                        <input type="hidden" value="<?= Yii::$app->request->csrfToken ?>" name="_csrf">
+                        <input type="text" placeholder="Ваше Имя" value="<?= $client->first_name ?>" name="name"/>
+                        <input type="text" placeholder="Ваша Фамилия" value="<?= $client->last_name ?>" name="last_name"/>
+                        <input type="tel" placeholder="Ваш номер телефона" value="<?= $client->phone ?>" id="phone" name="phone"/>
+                        <input type="password" placeholder="Новый пароль" name="password"/>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-default add-to-cart">Обновить информацию</button>
+                        </div>
                     </form>
-                    <div style="text-align: center">
-                        <button type="submit" class="btn btn-default add-to-cart">Обновить информацию</button>
-                    </div>
                 </div>
             </div>
 </section>
 
 <section id="advertisement">
     <div class="container">
-        <img src="images/shop/advertisement.jpg" alt=""/>
+        <img src="/images/shop/advertisement.jpg" alt=""/>
     </div>
 </section>

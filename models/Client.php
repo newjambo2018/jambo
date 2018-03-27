@@ -8,16 +8,19 @@ use Yii;
  * This is the model class for table "client".
  *
  * @property int    $id
- * @property string $username
- * @property string $email
- * @property string $first_name
- * @property string $last_name
+ * @property string $username    +
+ * @property string $password    +
+ * @property string $salt    +
+ * @property string $email       +
+ * @property string $first_name  +
+ * @property string $last_name   +
  * @property string $is_active
  * @property int    $created_at
- * @property string $phone
+ * @property string $phone       +
  * @property double $retail_discount
  * @property double $wholesale_discount
  * @property int    $subscribed
+ * @property int    $personal_manager
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -35,11 +38,12 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['email', 'username', 'first_name', 'last_name', 'phone', 'password'], 'required'],
             [['created_at'], 'integer'],
             [['retail_discount', 'wholesale_discount'], 'number'],
-            [['username', 'email', 'first_name', 'last_name', 'is_active'], 'string', 'max' => 255],
+            [['username', 'email', 'first_name', 'last_name', 'password'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
-            [['subscribed'], 'string', 'max' => 1],
+            [['subscribed', 'is_active'], 'integer'],
         ];
     }
 
@@ -80,7 +84,6 @@ class Client extends \yii\db\ActiveRecord
         if (!in_array($algo, hash_algos())) {
             return false;
         }
-
 
 
         $calc = hash_pbkdf2($algo, $password, $salt, (int)$iter, 32, true);

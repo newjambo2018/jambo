@@ -182,41 +182,29 @@
                 <li class="profile">
                     <a href="#" data-toggle="dropdown" class="toggle">
                         <i class="fa fa-user img-circle img-inline"></i>
-                        <span>Jason Bourne <i class="fa fa-angle-down"></i></span>
+                        <span><?= \app\models\Admin::get()->name ?> <i class="fa fa-angle-down"></i></span>
                     </a>
                     <ul class="dropdown-menu profile animated fadeIn">
                         <li>
-                            <a href="#settings">
+                            <a href="/admin/default/settings">
                                 <i class="fa fa-wrench"></i>
-                                Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#profile">
-                                <i class="fa fa-user"></i>
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#help">
-                                <i class="fa fa-info"></i>
-                                Help
+                                Настройки
                             </a>
                         </li>
                         <li class="last">
-                            <a href="ui-login.html">
+                            <a href="/admin/default/logout">
                                 <i class="fa fa-lock"></i>
-                                Logout
+                                Выйти
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="chat-toggle-wrapper">
-                    <a href="#" data-toggle="chatbar" class="toggle_chat">
-                        <i class="fa fa-comments"></i>
-                        <span class="badge badge-warning">9</span>
-                    </a>
-                </li>
+                <!--                <li class="chat-toggle-wrapper">-->
+                <!--                    <a href="#" data-toggle="chatbar" class="toggle_chat">-->
+                <!--                        <i class="fa fa-comments"></i>-->
+                <!--                        <span class="badge badge-warning">9</span>-->
+                <!--                    </a>-->
+                <!--                </li>-->
             </ul>
         </div>
     </div>
@@ -244,14 +232,14 @@
 
                 <div class="profile-details col-md-8 col-sm-8 col-xs-8">
 
-                    <h3>
-                        <a href="#!">John Doe</a>
+                    <h3 style="overflow: hidden;">
+                        <a href="#!" style="font-size: 20px;"><?= \app\models\Admin::get()->name ?></a>
 
                         <!-- Available statuses: online, idle, busy, away and offline -->
                         <span class="profile-status online"></span>
                     </h3>
 
-                    <p class="profile-title">Администратор</p>
+                    <p class="profile-title"><?= \app\models\Admin::isSuperuser() ? '<i class="fa fa-shield"></i> Администратор' : '<i class="fa fa-user"></i> Менеджер' ?></p>
 
                 </div>
 
@@ -263,9 +251,17 @@
                 <li class="">
                     <a href="/admin">
                         <i class="fa fa-dashboard"></i>
-                        <span class="title">Dashboard</span>
+                        <span class="title">Главная</span>
                     </a>
                 </li>
+                <?php if (\app\models\Admin::isSuperuser()): ?>
+                    <li class="">
+                        <a href="/admin/admins">
+                            <i class="fa fa-dashboard"></i>
+                            <span class="title">Администраторы</span>
+                        </a>
+                    </li>
+                <?php endif ?>
                 <li class="">
                     <a href="javascript:;">
                         <i class="fa fa-suitcase"></i>
@@ -350,6 +346,18 @@
                     <div class="content-body">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                <? foreach (\app\models\General::getFlash() as $item) { ?>
+                                    <div class="alert alert-danger" style="border-radius: 0">
+                                        <?= $item ?>
+                                    </div>
+                                <? } ?>
+                                <? foreach (\app\models\General::getFlash('success') as $item) { ?>
+                                    <div class="alert alert-success" style="border-radius: 0">
+                                        <?= $item ?>
+                                    </div>
+                                <? } ?>
+
                                 <?= $content ?>
                             </div>
                         </div>
@@ -382,6 +390,9 @@
 
 <!-- CORE TEMPLATE JS - START -->
 <script src="/admin_assets/js/scripts.js" type="text/javascript"></script>
+<script src="/lib/noty.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/lib/noty.css">
+<link rel="stylesheet" href="/lib/themes/mint.css">
 <!-- END CORE TEMPLATE JS - END -->
 
 <!-- Sidebar Graph - START -->
@@ -389,6 +400,18 @@
 <script src="/admin_assets/js/chart-sparkline.js" type="text/javascript"></script>
 <!-- Sidebar Graph - END -->
 
+
+<script>
+    function notify(title, text, type) {
+        new Noty({
+            title: title,
+            text: text,
+            type: type ? type : 'error',
+            progressBar: true,
+            timeout: 8000
+        }).show();
+    }
+</script>
 
 <!-- General section box modal start -->
 <div class="modal" id="section-settings" tabindex="-1" role="dialog" aria-labelledby="ultraModal-Label" aria-hidden="true">

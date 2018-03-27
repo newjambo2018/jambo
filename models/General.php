@@ -25,6 +25,20 @@ class General extends \Yii
         return $post;
     }
 
+
+    /**
+     * @return Client
+     */
+    public static function getUser($from_db = 0)
+    {
+        if ($from_db) return Client::find()
+            ->where(['id' => self::getSession('auth_info')->id])
+            ->limit(1)
+            ->one();
+
+        return General::getSession('auth_info');
+    }
+
     public static function setFlash($key, $value = true, $removeAfterAccess = true)
     {
         return Yii::$app->session->addFlash($key, $value, $removeAfterAccess);

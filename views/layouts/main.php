@@ -64,9 +64,15 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right col-xs-offset-2">
                         <ul class="nav navbar-nav">
-                            <li><a href="/profile"><i class="fa fa-user"></i>&nbsp;Кабинет</a></li>
+                            <?php if (\app\models\General::getSession('auth')): ?>
+                                <li><a href="/profile"><i class="fa fa-user"></i>&nbsp;Кабинет</a></li>
+                            <?php endif ?>
                             <li><a href="/checkout/cart" _data-open-cart="1"><i class="fa fa-shopping-cart"></i> Корзина <span class="badge cart-count-element"><?= \app\models\Carts::cartCount() ?></span></a></li>
-                            <li><a href="/auth"><i class="fa fa-lock"></i> Вход</a></li>
+                            <?php if (!\app\models\General::getSession('auth')): ?>
+                                <li><a href="/auth"><i class="fa fa-lock"></i> Вход</a></li>
+                            <?php else: ?>
+                                <li><a href="/auth/logout"><i class="fa fa-unlock"></i> Выход</a></li>
+                            <?php endif ?>
                         </ul>
                     </div>
                 </div>
@@ -92,12 +98,13 @@
                             <li class="dropdown"><a href="#">Магазин<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="/catalog">Каталог</a></li>
-                                    <li><a href="/catalog">Акция</a></li>
-                                    <li><a href="/catalog">Собственный импорт</a></li>
-                                    <li><a href="/catalog">Новинки</a></li>
-                                    <li><a href="/checkout">Ваш заказ</a></li>
+                                    <li><a href="/catalog?stock=1">Акция</a></li>
+                                    <li><a href="/catalog?brand=3">Собственный импорт</a></li>
+                                    <li><a href="/catalog?new=1">Новинки</a></li>
                                     <li><a href="/checkout/cart">Корзина</a></li>
-                                    <li><a href="/auth">Вход</a></li>
+                                    <?php if (!\app\models\General::getSession('auth')): ?>
+                                        <li><a href="/auth">Вход</a></li>
+                                    <?php endif ?>
                                 </ul>
                             </li>
                             <li><a href="#">О нас</a></li>
@@ -116,7 +123,18 @@
         </div>
     </div><!--/header-bottom-->
 </header><!--/header-->
-
+<div class="container">
+    <? foreach (\app\models\General::getFlash() as $item) { ?>
+        <div class="alert alert-danger" style="border-radius: 0">
+            <?= $item ?>
+        </div>
+    <? } ?>
+    <? foreach (\app\models\General::getFlash('success') as $item) { ?>
+        <div class="alert alert-success" style="border-radius: 0">
+            <?= $item ?>
+        </div>
+    <? } ?>
+</div>
 <?= $content ?>
 
 <footer id="footer"><!--Footer-->
