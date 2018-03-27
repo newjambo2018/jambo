@@ -41,7 +41,7 @@
                             <p><?= $item->item->retail_price ?> грн</p>
                         </td>
                         <td class="cart_quantity">
-                            <input type="number" value="<?= $item->count ?>" name="item[<?= $item->item->id ?>]" data-price-change="<?= $item->id ?>" min="1" max="<?= $item->item->quantity ?>" class="qtyinput">
+                            <input type="number" value="<?= $item->count ?>" data-price-change="<?= $item->id ?>" min="1" max="<?= $item->item->quantity ?>" class="qtyinput">
                         </td>
                         <td class="cart_total">
                             <p class="cart_total_price" id="sum<?= $item->id ?>"><?= $item->item->retail_price * $item->count ?> грн</p>
@@ -69,8 +69,63 @@
             </div>
         </div>
         <div class="row">
+            <div class="checkout-options" style="margin-bottom: 15px;">
+                <h3>Хотите оформить заказ?</h3>
+            </div>
             <div class="step-one">
                 <h2 class="heading">Шаг 1</h2>
+            </div>
+            <div class="checkout-options">
+                <h3>Вы новый пользователь?</h3>
+                <p>Сделайте выбор...</p>
+                <ul class="nav">
+                    <li><label><input type="radio"> Я зарегистрирован!</label></li>
+                    <li><label><input type="radio"> Я новый пользователь!</label></li>
+                </ul>
+            </div>
+            <div class="step-one" style="margin-top: 15px;">
+                <h2 class="heading">Шаг 2</h2>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="shopper-info" style="padding-left: 20px;">
+                            <p>Информация о заказе</p>
+                            <form>
+                                <input type="text" placeholder="Имя и фамилия">
+                                <input type="email" placeholder="E-mail адрес">
+                                <input type="tel" placeholder="Номер телефона">
+                                <input type="text" placeholder="Адрес">
+                                <ul class="user_info">
+                                    <li class="single_field">
+                                        <label>Ваш менеджер:</label>
+                                        <select>
+                                            <option>Юля</option>
+                                            <option>Антон</option>
+                                        </select>
+                                    </li>
+                                    <li class="single_field">
+                                        <label>Город:</label>
+                                        <select>
+                                            <option>Киев</option>
+                                            <option>Львов</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <a class="btn btn-default add-to-cart pull-right" href="">Оформить заказ</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="order-message">
+                            <p>Описание к заказу</p>
+                            <textarea name="message" placeholder="Добавьте описание к вашему заказу!"></textarea>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
