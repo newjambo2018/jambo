@@ -1,3 +1,69 @@
+<?php if ($index): ?>
+    <section id="slider"><!--slider-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#slider-carousel" data-slide-to="1"></li>
+                            <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-6">
+                                    <h1><span>E</span>-SHOPPER</h1>
+                                    <h2>Free E-Commerce Template</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    <button type="button" class="btn btn-default get">Get it now</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="/images/home/girl1.jpg" class="girl img-responsive" alt=""/>
+                                    <img src="/images/home/pricing.png" class="pricing" alt=""/>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1><span>E</span>-SHOPPER</h1>
+                                    <h2>100% Responsive Design</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    <button type="button" class="btn btn-default get">Get it now</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="/images/home/girl2.jpg" class="girl img-responsive" alt=""/>
+                                    <img src="/images/home/pricing.png" class="pricing" alt=""/>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1><span>E</span>-SHOPPER</h1>
+                                    <h2>Free Ecommerce Template</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    <button type="button" class="btn btn-default get">Get it now</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="/images/home/girl3.jpg" class="girl img-responsive" alt=""/>
+                                    <img src="/images/home/pricing.png" class="pricing" alt=""/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section><!--/slider--><?php endif ?>
+
 <section id="advertisement">
     <div class="container">
         <img src="/images/shop/advertisement.jpg" alt=""/>
@@ -102,16 +168,16 @@
                             <h2>Бренды</h2>
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked" style="font-weight: 300">
-                                    <li><a href="?brand=1"> <span class="pull-right">(50)</span>BabyMix</a></li>
-                                    <li><a href="?brand=23"> <span class="pull-right">(56)</span>Colorino</a></li>
-                                    <li><a href="?brand=30"> <span class="pull-right">(27)</span>Arial</a></li>
-                                    <li><a href="?brand=5"> <span class="pull-right">(32)</span>DankoToys</a></li>
-                                    <li><a href="#!"> <span class="pull-right">(5)</span>Defa</a></li>
-                                    <li><a href="?brand=31"> <span class="pull-right">(9)</span>Kinsmart</a></li>
-                                    <li><a href="#!"> <span class="pull-right">(4)</span>Brick</a></li>
-                                    <li><a href="?brand=41"> <span class="pull-right">(4)</span>Intex</a></li>
-                                    <li><a href="?brand=2"> <span class="pull-right">(4)</span>Doloni</a></li>
-                                    <li><a href="#!"> <span class="pull-right">(4)</span>Автопром</a></li>
+                                    <li><a href="?brand=1"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>BabyMix</a></li>
+                                    <li><a href="?brand=23"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Colorino</a></li>
+                                    <li><a href="?brand=30"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Arial</a></li>
+                                    <li><a href="?brand=5"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>DankoToys</a></li>
+                                    <li><a href="#!"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Defa</a></li>
+                                    <li><a href="?brand=31"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Kinsmart</a></li>
+                                    <li><a href="#!"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Brick</a></li>
+                                    <li><a href="?brand=41"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Intex</a></li>
+                                    <li><a href="?brand=2"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Doloni</a></li>
+                                    <li><a href="#!"> <span class="pull-right"><i class="fa fa-arrow-right"></i></span>Автопром</a></li>
                                 </ul>
                             </div>
                             <div class="panel-group category-products" id="accordian" style="margin-top: 10px;"><!--category-productsr-->
@@ -162,6 +228,10 @@
 
                                 <?php if ($product['brand'] === 3): ?>
                                     <img src="/images/home/import.png" class="new" alt=""/>
+                                <?php endif ?>
+
+                                <?php if ($product['retail_stock'] || $product['wholesale_stock']): ?>
+                                    <img src="/images/home/sale.png" class="new" alt=""/>
                                 <?php endif ?> <!-- import.png sale.png new.png -->
                             </div>
                         </div>

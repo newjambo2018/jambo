@@ -41,7 +41,7 @@
                             <p><?= $item->item->retail_price ?> грн</p>
                         </td>
                         <td class="cart_quantity">
-                            <input type="number" value="<?= $item->count ?>" data-price-change="<?= $item->id ?>" min="1" max="<?= $item->item->quantity ?>" class="qtyinput">
+                            <input type="number" value="<?= $item->count ?>" name="item[<?= $item->item->id ?>]" data-price-change="<?= $item->id ?>" min="1" max="<?= $item->item->quantity ?>" class="qtyinput">
                         </td>
                         <td class="cart_total">
                             <p class="cart_total_price" id="sum<?= $item->id ?>"><?= $item->item->retail_price * $item->count ?> грн</p>
@@ -69,9 +69,9 @@
             </div>
         </div>
         <div class="row">
-          <div class="step-one">
-              <h2 class="heading">Шаг 1</h2>
-          </div>
+            <div class="step-one">
+                <h2 class="heading">Шаг 1</h2>
+            </div>
         </div>
     </div>
 </section><!--/#do_action-->

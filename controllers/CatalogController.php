@@ -15,10 +15,14 @@ use yii\web\Controller;
 class CatalogController extends CommonController
 {
 
-    public function actionIndex($limit = 12, $cat = false, $subcat = false, $gender = false, $price = false, $brand = false, $search = false)
+    public function actionIndex($stock = 0, $limit = 12, $cat = false, $subcat = false, $gender = false, $price = false, $brand = false, $search = false)
     {
+        if (in_array($_SERVER['REQUEST_URI'], ['/', '/site/index'])) {
+            $index = 1;
+        }
+
         $query = ShopProducts::find()
-            ->select('name, id, vendor_code, retail_price, retail_stock, brand, category, sub_category, gender, quantity, slug');
+            ->select('name, id, vendor_code, retail_price, retail_stock, wholesale_stock, wholesale_price, brand, category, sub_category, gender, quantity, slug');
 
         if ($cat) $query = $query->andWhere(['category' => $cat]);
         if ($subcat) {
@@ -55,6 +59,14 @@ class CatalogController extends CommonController
                 ['LIKE', 'vendor_code', $search],
                 ['LIKE', 'name', $search],
                 ['LIKE', 'manufacturer_code', $search],
+            ]);
+        }
+
+        if ($stock) {
+            $query = $query->andWhere([
+                'or',
+                ['retail_stock' => 1],
+                ['wholesale_stock' => 1]
             ]);
         }
 
@@ -97,7 +109,8 @@ class CatalogController extends CommonController
             'cats'        => $cats,
             'brands'      => $brands,
             'price_range' => $price_range[0],
-            'price'       => $price
+            'price'       => $price,
+            'index'       => $index
         ]);
     }
 
