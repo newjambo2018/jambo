@@ -39,7 +39,7 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             [['email', 'username', 'first_name', 'last_name', 'phone', 'password'], 'required'],
-            [['created_at'], 'integer'],
+            [['created_at', 'personal_manager'], 'integer'],
             [['retail_discount', 'wholesale_discount'], 'number'],
             [['username', 'email', 'first_name', 'last_name', 'password'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],

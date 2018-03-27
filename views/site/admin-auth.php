@@ -19,10 +19,10 @@
             <label>Password</label>
             <div class="bar"></div>
         </div>
-        `
+
         <div class="actions">
             <input class="login" type="submit" value="Login"/>
-            <a href="">Create an account</a>
+<!--            <a href="">Create an account</a>-->
         </div>
     </form>
     <div class="auth-confirm">

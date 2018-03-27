@@ -18,23 +18,43 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
-            'data' => [
+            'data'  => [
                 'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+                'method'  => 'post',
             ],
         ]) ?>
     </p>
 
     <?= DetailView::widget([
-        'model' => $model,
+        'model'      => $model,
         'attributes' => [
             'id',
             'name',
             'email:email',
-            'password',
-            'salt',
-            'is_superuser',
-            'active',
+            [
+                'attribute' => 'is_superuser',
+                'format'    => 'raw',
+                'label'     => 'Уровень доступа',
+                'value'     => function ($data) {
+                    return '<div class="">' . ($data->is_superuser ? '<span style="color: green;"><i class="fa fa-shield"></i> Администратор</span>' : '<span style="color: orange;"><i class="fa fa-user"></i> Менеджер</span>') . '</div>';
+                }
+            ],
+            [
+                'attribute' => 'active',
+                'format'    => 'raw',
+                'label'    => 'Активен',
+                'value'     => function ($data) {
+                    return '<div class="">' . ($data->is_superuser ? '<span style="color: green;"><i class="fa fa-check-circle"></i> Да</span>' : '<span style="color: red;"><i class="fa fa-times"></i> Нет</span>') . '</div>';
+                }
+            ],
+            [
+                'attribute' => 'active',
+                'format'    => 'raw',
+                'label'    => 'Показан в списке менеджеров',
+                'value'     => function ($data) {
+                    return '<div class="">' . ($data->displayed ? '<span style="color: green;"><i class="fa fa-check-circle"></i> Да</span>' : '<span style="color: red;"><i class="fa fa-times"></i> Нет</span>') . '</div>';
+                }
+            ],
         ],
     ]) ?>
 

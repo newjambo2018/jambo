@@ -5,20 +5,19 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "shop_order_items".
+ * This is the model class for table "shop_cities".
  *
  * @property int $id
- * @property int $order_id
- * @property int $item_id
+ * @property string $name
  */
-class ShopOrderItems extends \yii\db\ActiveRecord
+class ShopCities extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'shop_order_items';
+        return 'shop_cities';
     }
 
     /**
@@ -27,7 +26,7 @@ class ShopOrderItems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'item_id'], 'integer'],
+            [['name'], 'string', 'max' => 100],
         ];
     }
 
@@ -38,8 +37,7 @@ class ShopOrderItems extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'order_id' => 'Order ID',
-            'item_id' => 'Item ID',
+            'name' => 'Name',
         ];
     }
 }

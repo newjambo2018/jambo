@@ -16,9 +16,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'phone')->label('Телефон')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'telegram_id')->label('Telegram ID')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'password')->label('Пароль')->passwordInput(['maxlength' => true, 'disabled' => true])->hint('Сервис автоматически сгенерирует пароль и отправит его менеджеру по указанному e-mail.') ?>
 
     <?= $form->field($model, 'is_superuser')->label('Является ли администратором?')->hint('Имеет ли менеджер полный доступ к панели администратора?')->checkbox() ?>
+
+    <?= $form->field($model, 'displayed')->label('Показан ли менеджер в списке корзины?')->hint('Показан ли менеджер в списке корзины?')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -53,7 +53,7 @@
                 else showed = 1;
             }
         ).on('click', '#reg', function () {
-            if (!$('[name=name]').val() || !$('[name=last_name]').val() || !$('[name=email]').val() || !$('[name=username]').val() || !$('[name=phone]').val() || !$('[name=password]').val()) alert('Вы должны заполнить все поля!');
+            if (!$('.signup-form [name=name]').val() || !$('.signup-form [name=last_name]').val() || !$('.signup-form [name=email]').val() || !$('.signup-form [name=username]').val() || !$('.signup-form [name=phone]').val() || !$('.signup-form [name=password]').val()) alert('Вы должны заполнить все поля!');
             else document.getElementById('reg_form').submit();
         })
     }

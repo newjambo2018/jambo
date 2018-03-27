@@ -14,6 +14,9 @@ use Yii;
  * @property string $salt
  * @property int    $is_superuser
  * @property int    $active
+ * @property int    $displayed
+ * @property string $phone
+ * @property string $telegram_id
  */
 class Admin extends \yii\db\ActiveRecord
 {
@@ -31,8 +34,8 @@ class Admin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['is_superuser', 'active'], 'integer'],
-            [['name', 'email', 'password', 'salt'], 'string', 'max' => 225],
+            [['is_superuser', 'active', 'displayed'], 'integer'],
+            [['name', 'email', 'password', 'salt', 'phone', 'telegram_id'], 'string', 'max' => 225],
         ];
     }
 
