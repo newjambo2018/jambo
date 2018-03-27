@@ -127,9 +127,6 @@
                 </div>
 
             </div>
-            <div class="step-one">
-                <h2 class="heading">Шаг 1</h2>
-            </div>
         </div>
     </div>
 </section><!--/#do_action-->
