@@ -149,13 +149,13 @@
                                         <div class="checkbox checkbox-circle">
                                             <a href="?<?= $_GET ? http_build_query($_GET) . '&' : '' ?>gender=m" class="gender-filter">
                                                 <input id="checkbox7" type="checkbox" <?= $_GET['gender'] == 'm' ? 'checked' : '' ?>>
-                                                <span for="checkbox7" style="font-weight: 300">Мальчик&nbsp;<i class="fas fa-male"></i></span>
+                                                <span for="checkbox7" style="font-weight: 300" class="gender-btn">Мальчик&nbsp;<i class="fas fa-male"></i></span>
                                             </a>
                                         </div>
                                         <div class="checkbox checkbox-circle" style="margin-top: 10px">
                                             <a href="?<?= $_GET ? http_build_query($_GET) . '&' : '' ?>gender=f" class="gender-filter">
                                                 <input id="checkbox8" type="checkbox" <?= $_GET['gender'] == 'f' ? 'checked' : '' ?> >
-                                                <span for="checkbox8" style="font-weight: 300">Девочка&nbsp;<i class="fas fa-female"></i></span>
+                                                <span for="checkbox8" style="font-weight: 300" class="gender-btn">Девочка&nbsp;<i class="fas fa-female"></i></span>
                                             </a>
                                         </div>
                                     </div>

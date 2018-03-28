@@ -2590,6 +2590,13 @@ h2.title {
     pointer-events: none;
     background-color: grey !important;
 }
+.gender-btn{
+    color: #696763;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
 /********
 ********ORDER HISTORY PAGE**********
