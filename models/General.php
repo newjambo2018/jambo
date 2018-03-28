@@ -27,10 +27,12 @@ class General extends \Yii
 
 
     /**
-     * @return Client
+     * @return Client|bool
      */
     public static function getUser($from_db = 0)
     {
+        if (!self::getSession('auth_info')) return false;
+
         if ($from_db) return Client::find()
             ->where(['id' => self::getSession('auth_info')->id])
             ->limit(1)

@@ -54,6 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '<div class="text-center">' . ($data->active ? '<span style="color: green;"><i class="fa fa-check-circle"></i> Да</span>' : '<span style="color: red;"><i class="fa fa-times"></i> Нет</span>') . '</div>';
                 }
             ],
+            [
+                'attribute' => 'active',
+                'format'    => 'raw',
+                'label' => 'Показан',
+                'value'     => function ($data) {
+                    return '<div class="text-center">' . ($data->displayed ? '<span style="color: green;"><i class="fa fa-check-circle"></i> Да</span>' : '<span style="color: red;"><i class="fa fa-times"></i> Нет</span>') . '</div>';
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

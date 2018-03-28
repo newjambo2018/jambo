@@ -262,6 +262,18 @@
                         </a>
                     </li>
                 <?php endif ?>
+                <li>
+                    <a href="/admin/orders">
+                        <i class="fa fa-database"></i>
+                        <span class="title">Заказы <span class="badge"></span></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/clients">
+                        <i class="fa fa-users"></i>
+                        <span class="title">Пользователи <span class="badge"></span></span>
+                    </a>
+                </li>
                 <li class="">
                     <a href="javascript:;">
                         <i class="fa fa-suitcase"></i>
@@ -326,7 +338,7 @@
                 <div class="page-title">
 
                     <div class="pull-left">
-                        <h1 class="title">Default Layout</h1></div>
+                        <h1 class="title">Jambo Admin Panel</h1></div>
 
 
                 </div>
