@@ -19,7 +19,7 @@
     <link href="/admin_assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/admin_assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/admin_assets/plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/admin_assets/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/admin_assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
     <link href="/admin_assets/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css"/>
     <!-- CORE CSS FRAMEWORK - END -->
@@ -239,7 +239,7 @@
                         <span class="profile-status online"></span>
                     </h3>
 
-                    <p class="profile-title"><?= \app\models\Admin::isSuperuser() ? '<i class="fa fa-shield"></i> Администратор' : '<i class="fa fa-user"></i> Менеджер' ?></p>
+                    <p class="profile-title"><?= \app\models\Admin::isSuperuser() ? '<i class="fa fa-user-secret"></i> Администратор' : '<i class="fa fa-user"></i> Менеджер' ?></p>
 
                 </div>
 
@@ -250,14 +250,14 @@
             <ul class='wraplist'>
                 <li class="">
                     <a href="/admin">
-                        <i class="fa fa-dashboard"></i>
+                        <i class="fa fa-home"></i>
                         <span class="title">Главная</span>
                     </a>
                 </li>
                 <?php if (\app\models\Admin::isSuperuser()): ?>
                     <li class="">
                         <a href="/admin/admins">
-                            <i class="fa fa-dashboard"></i>
+                            <i class="fa fa-user-secret"></i>
                             <span class="title">Администраторы</span>
                         </a>
                     </li>
@@ -278,7 +278,7 @@
                     <a href="javascript:;">
                         <i class="fa fa-suitcase"></i>
                         <span class="title">Dropdown</span>
-                        <span class="arrow "></span>
+                        <span class="fa fa-arrow-down pull-right" style="margin-top: 15px;margin-right: 15px"></span>
                     </a>
                     <ul class="sub-menu">
                         <li>
@@ -401,10 +401,12 @@
 
 
 <!-- CORE TEMPLATE JS - START -->
-<script src="/admin_assets/js/scripts.js" type="text/javascript"></script>
-<script src="/lib/noty.min.js" type="text/javascript"></script>
+<script src="/js/maskedinput.min.js"></script>
+
 <link rel="stylesheet" href="/lib/noty.css">
 <link rel="stylesheet" href="/lib/themes/mint.css">
+<script src="/admin_assets/js/scripts.js" type="text/javascript"></script>
+<script src="/lib/noty.min.js" type="text/javascript"></script>
 <!-- END CORE TEMPLATE JS - END -->
 
 <!-- Sidebar Graph - START -->
@@ -422,6 +424,7 @@
             timeout: 8000
         }).show();
     }
+    $("#phone").mask("+38 (099) 999 99 99");
 </script>
 
 <!-- General section box modal start -->

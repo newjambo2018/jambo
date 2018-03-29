@@ -75,15 +75,20 @@ class CheckoutController extends CommonController
             $order->sum = $sum;
             $order->sum_discount = $sum_discount;
             $order->address = General::post('address');
+            $order->phone = General::post('phone');
 
-            if ($order->save()) {
-                Carts::truncate();
-
-                General::setFlash('success', '<b><i class="fa fa-check-circle"></i> Успех!</b> Ваш заказ оформлен успешно. Вскоре с Вами свяжется наш менеджер.');
-
-                return $this->redirect('/');
-            } else {
+            if (!$order->phone || !$order->name || !$order->email) {
                 General::setFlash('errors', '<b><i class="fa fa-times-circle"></i> Ошибка!</b> Проверьте правильность заполнения полей!');
+            } else {
+                if ($order->validate() && $order->save()) {
+                    Carts::truncate();
+
+                    General::setFlash('success', '<b><i class="fa fa-check-circle"></i> Успех!</b> Ваш заказ оформлен успешно. Вскоре с Вами свяжется наш менеджер.');
+
+                    return $this->redirect('/');
+                } else {
+                    General::setFlash('errors', '<b><i class="fa fa-times-circle"></i> Ошибка!</b> Проверьте правильность заполнения полей!');
+                }
             }
         }
 

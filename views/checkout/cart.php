@@ -101,11 +101,11 @@ use app\models\General;
                                 <div class="shopper-info" style="padding-left: 20px;">
                                     <p>Информация о заказе</p>
                                     <div class="shopper-form">
-                                        <input type="text" placeholder="Имя и фамилия" name="name" value="<? if (General::getUser()) {
+                                        <input type="text" placeholder="Имя и фамилия*" name="name" value="<? if (General::getUser()) {
                                             echo General::getUser()->first_name . ' ' . General::getUser()->last_name;
-                                        } ?>">
-                                        <input type="email" placeholder="E-mail адрес" name="email" value="<?= General::getUser()->email ?>">
-                                        <input type="tel" placeholder="Номер телефона" name="phone" value="<?= General::getUser()->phone ?>" id="phone">
+                                        } ?>" required>
+                                        <input type="email" placeholder="E-mail адрес*" name="email" value="<?= General::getUser()->email ?>" required>
+                                        <input type="tel" placeholder="Номер телефона*" name="phone" value="<?= General::getUser()->phone ?>" id="phone" required>
                                         <input type="text" placeholder="Адрес" name="address" value="">
                                         <ul class="user_info">
                                             <li class="single_field">
