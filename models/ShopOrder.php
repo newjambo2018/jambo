@@ -16,6 +16,7 @@ use Yii;
  * @property int $delivery
  * @property double $delivery_price
  * @property string $name
+ * @property string $phone
  * @property string $address
  * @property string $email
  * @property string $items
@@ -90,6 +91,7 @@ class ShopOrder extends \yii\db\ActiveRecord
             [['comment', 'items'], 'string'],
             [['address'], 'string', 'max' => 500],
             [['name'], 'string', 'max' => 100],
+            [['phone'], 'string', 'max' => 30],
             [['email'], 'string', 'max' => 225],
         ];
     }

@@ -273,4 +273,11 @@ class OrdersController extends AdminController
 
         return json_encode(['id' => $client->id, 'name' => $client->first_name . ' ' . $client->last_name, 'email' => $client->email]);
     }
+
+    public function actionAjaxChangeStatus($order_id, $status)
+    {
+        ShopOrder::updateAll(['status' => $status], ['id' => $order_id]);
+
+        return ShopOrder::getAdminStatuses()[$status];
+    }
 }

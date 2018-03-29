@@ -63,6 +63,13 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
             ],
             'email:email',
             [
+                'attribute' => 'phone',
+                'format'    => 'raw',
+                'value'     => function ($data) {
+                    return '<i class="fa fa-phone"></i> <a href="tel:' . $data->phone . '">' . $data->phone . '</a>';
+                }
+            ],
+            [
                 'attribute' => 'sum',
                 'format'    => 'raw',
                 'label'     => 'Сумма',
@@ -98,7 +105,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 'attribute' => 'status',
                 'format'    => 'raw',
                 'value'     => function ($data) {
-                    return \app\models\ShopOrder::getAdminStatuses()[$data->status];
+                    return '<span id="current_status">' . \app\models\ShopOrder::getAdminStatuses()[$data->status] . '</span>';
                 }
             ],
             'created_at:datetime',
@@ -121,9 +128,21 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
         ?>
 
         <div class="col-xs-12">
-            <div class="col-xs-5"><input type="text" class="form-control" id="vendor_code_field" placeholder="Добавить товар по артикулу"></div>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" id="vendor_code_field" placeholder="Добавить товар по артикулу">
+            </div>
             <div class="col-xs-2">
-                <button class="btn btn-success" data-add-by-vendor-code>К заказу</button>
+                <button class="btn btn-success col-xs-12" data-add-by-vendor-code>К заказу</button>
+            </div>
+            <div class="col-xs-4">
+                <select id="order_status_change" class="form-control">
+                    <? foreach (\app\models\ShopOrder::getStatuses() as $key => $item) { ?>
+                        <option value="<?= $key ?>" <?= $model->status === $key ? 'selected' : '' ?>><?= $item ?></option>
+                    <? } ?>
+                </select>
+            </div>
+            <div class="col-xs-2">
+                <button class="btn btn-danger col-xs-12" data-change-status>Новый статус</button>
             </div>
         </div>
 
@@ -201,6 +220,19 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                         $('#total_sum_discount').html(data['sum_discount']);
                     }
                     else notify(data['message'], 'error')
+                }
+            )
+        }).on('click', '[data-change-status]', function () {
+            var status = $('#order_status_change').val();
+
+            $.get(
+                '/admin/orders/ajax-change-status',
+                {
+                    order_id: "<?= $model->id ?>",
+                    status: status
+                }, function (data) {
+                    notify('Статус обновлен!<br><b>' + data + '</b>', 'success');
+                    $('#current_status').html(data);
                 }
             )
         })

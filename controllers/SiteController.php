@@ -6,6 +6,7 @@ use app\common\CommonController;
 use app\models\Admin;
 use app\models\Carts;
 use app\models\General;
+use app\models\Telegram;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -94,5 +95,21 @@ class SiteController extends CommonController
         }
 
         return $this->render('admin-auth');
+    }
+
+    public function actionAmdkandjkhuiwojlkndskbfjhuioijweonjkhbiuonaicslnkj()
+    {
+        $var = new \app\models\Telegram();
+
+        unset($var);
+
+        return 1;
+    }
+
+    public function actionSet()
+    {
+        $url = 'http://31.131.31.229/site/amdkandjkhuiwojlkndskbfjhuioijweonjkhbiuonaicslnkj';
+
+        General::printR(General::curl_call('https://api.telegram.org/bot' . '595054108:AAEJjBZvh_XgzqNBFNM84jeCavOFr_2t8bY' . '/setWebhook?url=' . urlencode($url) . '&certificate=' . urlencode('http://31.131.31.229/cert.crt'), false));
     }
 }

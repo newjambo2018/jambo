@@ -57,8 +57,20 @@ $managers = \yii\helpers\ArrayHelper::map(\app\models\Admin::find()
                 }
             ],
             'phone',
-            'retail_discount',
-            'wholesale_discount',
+            [
+                'attribute' => 'retail_discount',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return '<span style="color: red;">-' . $data->retail_discount . '%</span>';
+                }
+            ],
+            [
+                'attribute' => 'wholesale_discount',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return '<span style="color: red;">-' . $data->wholesale_discount . '%</span>';
+                }
+            ],
             [
                 'attribute' => 'subscribed',
                 'format'    => 'raw',
