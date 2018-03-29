@@ -230,7 +230,7 @@ use app\models\General;
                                     <p><?= mb_strlen($product['name']) > 27 ? mb_substr($product['name'], 0, 27) . '...' : $product['name'] ?></p>
                                     <div>
                                         <div>
-                                            <input type="number" value="1" min="1" data-item-quantity="<?= $product['id'] ?>" class="qtyinput">
+                                            <input type="number" value="1" min="1" data-item-quantity="<?= $product['id'] ?>" class="qtyinput" style="background: #fefefe;">
                                         </div>
                                         <a class="btn btn-default add-to-cart" data-quantity="s" data-to-cart="<?= $product['id'] ?>"><i class="fa fa-shopping-cart"></i><span>В корзину</span></a>
                                     </div>
