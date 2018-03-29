@@ -1,3 +1,11 @@
+<?
+/* @var $this \yii\web\View */
+/* @var $content string */
+\app\assets\AdminAsset::register($this);
+
+?>
+<?php $this->beginPage() ?>
+
 <!DOCTYPE html>
 <html class=" ">
 <head>
@@ -31,6 +39,8 @@
     <!-- CORE CSS TEMPLATE - START -->
     <link href="/admin_assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="/admin_assets/css/responsive.css" rel="stylesheet" type="text/css"/>
+    <?php $this->head() ?>
+
     <!-- CORE CSS TEMPLATE - END -->
 
 </head>
@@ -38,6 +48,8 @@
 
 <!-- BEGIN BODY -->
 <body class=" "><!-- START TOPBAR -->
+<?php $this->beginBody() ?>
+
 <div class='page-topbar '>
     <div class='logo-area' style="background-image:none !important;color: white;font-size: 25px;text-align: center;word-spacing: 0px;padding-top: 16px">JAMBO ADMIN</div>
     <div class='quick-area'>
@@ -269,9 +281,22 @@
                     </a>
                 </li>
                 <li>
+                    <?
+                    $new_orders = \app\models\ShopOrder::find()
+                        ->where(['status' => \app\models\ShopOrder::STATUS_NEW]);
+                    if (!($admin = \app\models\Admin::get())->is_superuser) $new_orders = $new_orders->andWhere(['manager_id' => $admin->id]);
+
+                    $new_orders = $new_orders->count();
+                    ?>
                     <a href="/admin/orders">
                         <i class="fa fa-database"></i>
-                        <span class="title">Заказы <span class="badge"></span></span>
+                        <span class="title">Заказы <span class="badge badge-danger"><?= $new_orders ?></span></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/products">
+                        <i class="fa fa-sitemap"></i>
+                        <span class="title">Продукция <span class="badge"></span></span>
                     </a>
                 </li>
                 <li>
@@ -420,8 +445,11 @@
 <script src="/admin_assets/js/chart-sparkline.js" type="text/javascript"></script>
 <!-- Sidebar Graph - END -->
 
+<?php $this->endBody() ?>
+
 
 <script>
+
     function notify(text, type) {
         new Noty({
             text: text,
@@ -430,7 +458,9 @@
             timeout: 8000
         }).show();
     }
+
     $("#phone").mask("+38 (099) 999 99 99");
+
 </script>
 
 <!-- General section box modal start -->
@@ -458,4 +488,5 @@
 </html>
 
 
+<?php $this->endPage() ?>
 

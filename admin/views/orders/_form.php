@@ -57,9 +57,9 @@ $model->created_by_id = \app\models\Admin::get()->id;
                 }, function (data) {
                     data = JSON.parse(data);
 
-                    $('#shoporder-client_id').val(data['id']).trigger('change');
-                    $('#shoporder-name').val(data['name']).trigger('change');
-                    $('#shoporder-email').val(data['email']).trigger('change');
+                    $('#shoporder-client_id').val(data['id']);
+                    $('#shoporder-name').val(data['name']);
+                    $('#shoporder-email').val(data['email']);
                 }
             )
         })

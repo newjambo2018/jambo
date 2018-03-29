@@ -18,7 +18,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
 <div class="shop-order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -81,6 +81,8 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 'attribute' => 'city',
                 'format'    => 'raw',
                 'label'     => 'Город',
+                'filter' => \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
+                    ->all(), 'id', 'name'),
                 'value'     => function ($data) use ($cities) {
                     return $cities[$data->city];
                 }
@@ -89,6 +91,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
             [
                 'attribute' => 'status',
                 'format'    => 'raw',
+                'filter' => \app\models\ShopOrder::getStatuses(),
                 'value'     => function ($data) {
                     return '<div class="text-center">' . \app\models\ShopOrder::getAdminStatuses()[$data->status] . '</div>';
                 }
@@ -99,5 +102,4 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
 </div>

@@ -56,7 +56,14 @@ $managers = \yii\helpers\ArrayHelper::map(\app\models\Admin::find()
             //'wholesale_discount',
             //'subscribed',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'label'  => 'Actions',
+                'format' => 'raw',
+                'value'  => function ($data) {
+                    return "<a href=\"/admin/clients/view?id=" . $data->id . "\" title=\"View\" aria-label=\"View\" data-pjax=\"0\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> 
+                            <a href=\"/admin/clients/update?id=" . $data->id . "\" title=\"Update\" aria-label=\"Update\" data-pjax=\"0\"><span class=\"glyphicon glyphicon-pencil\"></span></a>" . (\app\models\Admin::get()->is_superuser ? "<a href=\"/admin/clients/delete?id=" . $data->id . "\" title=\"Delete\" aria-label=\"Delete\" data-pjax=\"0\" data-confirm=\"Are you sure you want to delete this item?\" data-method=\"post\"><span class=\"glyphicon glyphicon-trash\"></span></a>" : "");
+                }
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

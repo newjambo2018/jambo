@@ -2,6 +2,7 @@
 
 namespace app\admin\controllers;
 
+use app\models\Admin;
 use app\models\Client;
 use app\models\General;
 use app\models\ShopProducts;
@@ -40,7 +41,12 @@ class OrdersController extends AdminController
     public function actionIndex()
     {
         $searchModel = new OrdersSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $admin = Admin::get();
+        $params = Yii::$app->request->queryParams;
+
+        if (!$admin->is_superuser) $params['OrdersSearch']['manager_id'] = $admin->id;
+
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel'  => $searchModel,
