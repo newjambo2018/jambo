@@ -66,7 +66,7 @@ class CheckoutController extends CommonController
             $order->comment = General::post('message');
             $order->status = ShopOrder::STATUS_NEW;
             $order->created_at = time();
-            $order->items = serialize($items_array);
+            $order->items = json_encode($items_array);
             $order->sum = $sum;
             $order->address = General::post('address');
 

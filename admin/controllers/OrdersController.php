@@ -2,6 +2,8 @@
 
 namespace app\admin\controllers;
 
+use app\models\General;
+use app\models\ShopProducts;
 use Yii;
 use app\models\ShopOrder;
 use app\admin\models\OrdersSearch;
@@ -21,9 +23,9 @@ class OrdersController extends AdminController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+
                 ],
             ],
         ];
@@ -31,6 +33,7 @@ class OrdersController extends AdminController
 
     /**
      * Lists all ShopOrder models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -39,14 +42,16 @@ class OrdersController extends AdminController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
      * Displays a single ShopOrder model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -60,6 +65,7 @@ class OrdersController extends AdminController
     /**
      * Creates a new ShopOrder model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -78,7 +84,9 @@ class OrdersController extends AdminController
     /**
      * Updates an existing ShopOrder model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -98,13 +106,16 @@ class OrdersController extends AdminController
     /**
      * Deletes an existing ShopOrder model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)
+            ->delete();
 
         return $this->redirect(['index']);
     }
@@ -112,7 +123,9 @@ class OrdersController extends AdminController
     /**
      * Finds the ShopOrder model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
+     *
      * @return ShopOrder the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -123,5 +136,103 @@ class OrdersController extends AdminController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAjaxQuantity($order_id, $item_id, $quantity)
+    {
+        $order = ShopOrder::find()
+            ->where(['id' => $order_id])
+            ->limit(1)
+            ->one();
+
+        $items = json_decode($order->items, 1);
+        Yii::warning(print_r([$item_id, $items], 1));
+
+        if (key_exists($item_id, $items)) $items[$item_id] = $quantity;
+
+        Yii::error(print_r([$item_id, $items], 1));
+
+
+        $order->items = json_encode($items);
+        $order->sum = $this->recalculateSum($items);
+
+        if ($order->save()) {
+
+            return $order->sum;
+        }
+
+        return json_encode($order->errors);
+    }
+
+    public function actionAjaxDelete($order_id, $item_id)
+    {
+        $order = ShopOrder::find()
+            ->where(['id' => $order_id])
+            ->limit(1)
+            ->one();
+
+        $items = json_decode($order->items, 1);
+        if (key_exists($item_id, $items)) unset($items[$item_id]);
+
+        Yii::error(print_r($items, 1));
+
+        $order->items = json_encode($items);
+        if ($items) $order->sum = $this->recalculateSum($items); else $order->sum = 0;
+
+        if ($order->save()) {
+
+            return $order->sum;
+        }
+
+        return json_encode($order->errors);
+    }
+
+    public function recalculateSum($items_array)
+    {
+        $items_in = [];
+
+        foreach ($items_array as $key => $value) $items_in[] = $key;
+
+        $items_in_query = implode(', ', $items_in);
+
+        $items = ShopProducts::find()
+            ->select('id, retail_price')
+            ->where("id IN ({$items_in_query})")
+            ->all();
+
+        $sum = 0;
+
+        foreach ($items as $item) $sum += $item->retail_price * $items_array[$item->id];
+
+        return $sum;
+    }
+
+    public function actionAjaxAddByVendorCode($order_id, $vendor_code)
+    {
+        $order = ShopOrder::find()
+            ->where(['id' => $order_id])
+            ->limit(1)
+            ->one();
+
+        $new_item = ShopProducts::find()
+            ->where(['vendor_code' => $vendor_code])
+            ->limit(1)
+            ->one();
+
+        if (!$new_item) return json_encode(['status' => 'error', 'message' => 'Товар с таким артикулом не найден в базе!']);
+
+        $items = json_decode($order->items, 1);
+
+        if (key_exists($new_item->id, $items)) return json_encode(['status' => 'error', 'message' => 'Товар с таким артикулом уже присутствует в заказе!']); else $items[$new_item->id] = "1";
+
+        $order->items = json_encode($items);
+        if ($items) $order->sum = $this->recalculateSum($items); else $order->sum = 0;
+
+        if ($order->save()) {
+
+            return json_encode(['status' => 'success', 'data' => $this->renderAjax('item', ['item' => $new_item, 'model' => $order]), 'sum' => $order->sum]);
+        }
+
+        return json_encode($order->errors);
     }
 }

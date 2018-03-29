@@ -414,9 +414,8 @@
 
 
 <script>
-    function notify(title, text, type) {
+    function notify(text, type) {
         new Noty({
-            title: title,
             text: text,
             type: type ? type : 'error',
             progressBar: true,
