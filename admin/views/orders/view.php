@@ -67,7 +67,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 'format'    => 'raw',
                 'label'     => 'Сумма',
                 'value'     => function ($data) {
-                    return '<span style="color: green;"><i class="fa fa-money"></i> ' . $data->sum . ' грн</span>';
+                    return '<span style="color: green;"><i class="fa fa-money"></i> <span id="total_sum">' . $data->sum . '</span> грн</span>';
                 }
             ],
             [
@@ -75,7 +75,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 'format'    => 'raw',
                 'label'     => 'Сумма скидки',
                 'value'     => function ($data) {
-                    return '<span style="color: red;">-' . $data->sum_discount . ' грн</span>';
+                    return '<span style="color: red;">-<span id="total_sum_discount">' . $data->sum_discount . '</span> грн</span>';
                 }
             ],
             //            'delivery',
@@ -115,30 +115,94 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
         foreach (json_decode($model->items, 1) as $key => $value) $items[] = $key;
 
         $items_query = implode(', ', $items);
-        $items = \app\models\ShopProducts::find()
+        if ($items_query) $items = \app\models\ShopProducts::find()
             ->where("id IN ($items_query)")
             ->all();
         ?>
 
-        <? foreach ($items as $item) { ?>
-            <div class="col-xs-12" style="border: 1px solid #eee;padding: 10px;margin-top: 10px;">
-                <div class="col-xs-1 text-center">
-                    <img src="/images/product-details/1.jpg" alt="" style="max-height: 50px">
-                </div>
-                <div class="col-xs-5" style="padding-top: 15px">
-                    <?= $item->name ?> <b>Артикул: <?= $item->vendor_code ?></b>
-                </div>
-                <div class="col-xs-2 text-center" style="padding-top: 8px">
-                    <input type="number" class="form-control" value="<?= json_decode($model->items, 1)[$item->id] ?>">
-                </div>
-                <div class="col-xs-3 text-center" style="padding-top: 15px;font-size: 17px">
-                    <?= number_format($item->retail_price, 2) ?> грн
-                </div>
-                <div class="col-xs-1 text-center" style="padding-top: 10px;">
-                    <i class="fa fa-times" style="font-size: 25px"></i>
-                </div>
+        <div class="col-xs-12">
+            <div class="col-xs-5"><input type="text" class="form-control" id="vendor_code_field" placeholder="Добавить товар по артикулу"></div>
+            <div class="col-xs-2">
+                <button class="btn btn-success" data-add-by-vendor-code>К заказу</button>
             </div>
-        <? } ?>
+        </div>
+
+        <div class="order_items_list">
+            <? foreach ($items as $item) { ?>
+                <?= $this->render('item', ['item' => $item, 'model' => $model]) ?>
+            <? } ?>
+        </div>
     </div>
 
 </div>
+
+
+<script>
+    window.onload = function () {
+        $(document).on('change', '[data-item-id]', function () {
+            var _this = $(this);
+
+            $.get(
+                '/admin/orders/ajax-quantity',
+                {
+                    order_id: _this.data('item'),
+                    item_id: _this.data('item-id'),
+                    quantity: _this.val()
+                }, function (data) {
+                    if (data !== 'error') {
+                        notify('Информация обновлена', 'success');
+
+                        data = JSON.parse(data);
+
+                        $('#total_sum').html(data['sum']);
+                        $('#total_sum_discount').html(data['sum_discount']);
+                    }
+                    else notify('Ошибка! Информация НЕ обновлена! Попробуйте еще раз.', 'error')
+                }
+            )
+        }).on('click', '[data-delete]', function () {
+            var _this = $(this);
+
+            $.get(
+                '/admin/orders/ajax-delete',
+                {
+                    order_id: _this.data('item'),
+                    item_id: _this.data('delete')
+                }, function (data) {
+                    if (data !== 'error') {
+                        notify('Позиция удалена', 'success');
+                        $('[data-order-item=' + _this.data('delete') + ']').remove();
+
+                        data = JSON.parse(data);
+
+                        $('#total_sum').html(data['sum']);
+                        $('#total_sum_discount').html(data['sum_discount']);
+                    }
+                    else notify('Ошибка! Попробуйте еще раз.', 'error')
+                }
+            )
+        }).on('click', '[data-add-by-vendor-code]', function () {
+            var vendor_code = $('#vendor_code_field').val();
+
+            $.get(
+                '/admin/orders/ajax-add-by-vendor-code',
+                {
+                    order_id: "<?= $model->id ?>",
+                    vendor_code: vendor_code
+                }, function (data) {
+                    data = JSON.parse(data);
+
+                    if (data['status'] === 'success') {
+                        notify('Позиция добавлена к заказу!', 'success');
+
+                        $('.order_items_list').append(data['data']);
+
+                        $('#total_sum').html(data['sum']);
+                        $('#total_sum_discount').html(data['sum_discount']);
+                    }
+                    else notify(data['message'], 'error')
+                }
+            )
+        })
+    }
+</script>

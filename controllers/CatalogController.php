@@ -71,7 +71,8 @@ class CatalogController extends CommonController
         }
 
         $price_range = clone $query;
-        $price_range = $price_range->select('MAX(retail_price) as max, MIN(retail_price) as min')
+        $price_type = General::isWholesale() ? 'wholesale_price' : 'retail_price';
+        $price_range = $price_range->select("MAX($price_type) as max, MIN($price_type) as min")
             ->asArray()
             ->all();
 
@@ -79,8 +80,8 @@ class CatalogController extends CommonController
             $price = explode(',', $price);
             $query = $query->andWhere([
                 'and',
-                ['>', 'retail_price', $price[0]],
-                ['<', 'retail_price', $price[1]]
+                ['>', $price_type, $price[0]],
+                ['<', $price_type, $price[1]]
             ]);
         }
 
@@ -151,7 +152,7 @@ class CatalogController extends CommonController
             ->one();
 
         $same = ShopProducts::find()
-            ->select('slug, name, id, retail_price')
+            ->select('slug, name, id, retail_price, wholesale_price')
             ->where(['sub_category' => $product->sub_category])
             ->orderBy('RAND()')
             ->limit(6)

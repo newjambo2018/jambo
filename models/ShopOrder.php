@@ -85,10 +85,9 @@ class ShopOrder extends \yii\db\ActiveRecord
     {
         return [
             [['client_id', 'sum', 'items'], 'required'],
-            [['client_id', 'manager_id', 'created_by_id', 'city', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['client_id', 'manager_id', 'created_by_id', 'city', 'status', 'created_at', 'updated_at', 'delivery'], 'integer'],
             [['sum', 'sum_discount', 'delivery_price'], 'number'],
             [['comment', 'items'], 'string'],
-            [['delivery'], 'string', 'max' => 2],
             [['address'], 'string', 'max' => 500],
             [['name'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 225],

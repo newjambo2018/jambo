@@ -44,13 +44,13 @@ use app\models\General;
                                 <p>Артикул: <?= $item->item->vendor_code ?></p>
                             </td>
                             <td class="cart_price" id="price<?= $item->id ?>">
-                                <p><?= $item->item->retail_price ?> грн</p>
+                                <p><?= General::actualPrice($item->item) ?> грн</p>
                             </td>
                             <td class="cart_quantity">
                                 <input type="number" name="item[<?= $item->item->id ?>]" value="<?= $item->count ?>" data-price-change="<?= $item->id ?>" min="1" max="<?= $item->item->quantity ?>" class="qtyinput">
                             </td>
                             <td class="cart_total">
-                                <p class="cart_total_price" id="sum<?= $item->id ?>"><?= $item->item->retail_price * $item->count ?> грн</p>
+                                <p class="cart_total_price" id="sum<?= $item->id ?>"><?= General::actualPrice($item->item) * $item->count ?> грн</p>
                             </td>
                             <td class="cart_delete">
                                 <a class="cart_quantity_delete" data-remove-from-cart="<?= $item->item->id ?>"><i class="fa fa-times"></i></a>

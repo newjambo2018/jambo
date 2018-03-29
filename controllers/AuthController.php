@@ -39,6 +39,7 @@ class AuthController extends CommonController
                 $new_client->subscribed = 1;
                 $new_client->salt = General::newToken();
                 $new_client->password = md5($new_client->salt . ':' . md5(General::post('password')));
+                $new_client->wholesale = General::post('wholesale') === 'on' ? 1 : 0;
 
                 if ($new_client->save()) {
                     $client_activation = new ClientActivation();

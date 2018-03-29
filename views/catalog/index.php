@@ -1,3 +1,8 @@
+<?
+
+use app\models\General;
+
+?>
 <?php if ($index): ?>
     <section id="slider"><!--slider-->
         <div class="container">
@@ -213,7 +218,7 @@
                             <div class="single-products">
                                 <div class="productinfo text-center">
                                     <a href="/catalog/product/<?= $product['slug'] ?>"><img src="/images/shop/product12.jpg" alt=""/></a>
-                                    <h2><?= $product['retail_price'] ?> грн</h2>
+                                    <h2><?= General::actualPrice($product) ?> грн</h2>
                                     <h6>
                                         <?php if ($product['quantity']): ?>
                                             <span class="badge badge-secondary" style="background: #28a745">В наличии</span>
@@ -230,7 +235,7 @@
                                     <img src="/images/home/import.png" class="new" alt=""/>
                                 <?php endif ?>
 
-                                <?php if ($product['retail_stock'] || $product['wholesale_stock']): ?>
+                                <?php if (General::isWholesale() ? $product['wholesale_stock'] : $product['retail_stock']): ?>
                                     <img src="/images/home/sale.png" class="new" alt=""/>
                                 <?php endif ?> <!-- import.png sale.png new.png -->
                             </div>

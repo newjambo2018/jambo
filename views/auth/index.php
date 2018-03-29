@@ -34,6 +34,11 @@
                         <input type="tel" placeholder="Ваш номер телефона" id="phone" name="phone"/>
                         <div style="position:relative;"><input type="password" placeholder="Ваш пароль" name="password" id="register_password"/> <span style="position: absolute;top: 10px;right: 15px;"><i class="far fa-eye" style="cursor: pointer;" id="show_password"></i></span></div>
                         <input type="hidden" name="register" value="1">
+                        <div class="col-xs-12" style="padding: 10px 0;">
+                            <label for="wholesale_checkbox">
+                                <input type="checkbox" id="wholesale_checkbox" name="wholesale" style="height: 14px;margin: 0;padding: 0;width: 20px;margin-right: 0px;display: inline-block"> Я оптовый покупатель
+                            </label>
+                        </div>
                         <a href="#!" id="reg" class="btn btn-default add-to-cart">Зарегистрироваться</a>
                     </form>
                 </div><!--/sign up form-->

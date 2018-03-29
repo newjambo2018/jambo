@@ -22,7 +22,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Shop Order', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать заказ вручную', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

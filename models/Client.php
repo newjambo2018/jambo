@@ -21,6 +21,7 @@ use Yii;
  * @property double $wholesale_discount
  * @property int    $subscribed
  * @property int    $personal_manager
+ * @property int    $wholesale
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -43,7 +44,7 @@ class Client extends \yii\db\ActiveRecord
             [['retail_discount', 'wholesale_discount'], 'number'],
             [['username', 'email', 'first_name', 'last_name', 'password'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
-            [['subscribed', 'is_active'], 'integer'],
+            [['subscribed', 'is_active', 'wholesale'], 'integer'],
         ];
     }
 
