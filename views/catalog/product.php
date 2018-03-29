@@ -1,7 +1,11 @@
 <?
+
 /**
  * @var \app\models\ShopProducts $product
  */
+
+use app\models\General;
+
 ?>
 
 <section>
@@ -36,13 +40,16 @@
                                 <h2><?= $product->name ?></h2>
                                 <p>Код товара: <?= $product->vendor_code ?></p>
                                 <span>
-									<span><?= number_format($product->retail_price, 2) ?> грн</span>
+									<span><?= number_format(General::actualPrice($product), 2) ?> грн</span>
 									<label>Количетсво:</label>
 									<input type="number" value="1" id="quantity-field" min="1" max="<?= $product->quantity ?>"/>
 									<button type="button" class="btn btn-fefault add-to-cart <?= $product->quantity < 1 ? 'btn-disabled' : '' ?>" data-to-cart="<?= $product->id ?>" data-quantity="y" style="margin-bottom: 8px;margin-left: 10px;">
 										<i class="fa fa-shopping-cart"></i>
 										В корзину
 									</button>
+                                    <?php if (General::isWholesale() || General::getUser()->retail_discount): ?>
+                                        <div class="hint-block hint" style="text-align: left;margin-top: 10px;color: grey;font-size: 12px;">Товар отображается с учетом акций, оптовых и Ваших личных скидок.</div>
+                                    <?php endif ?>
 								</span>
                                 <p><b>На складе:</b>&nbsp;<?= $product->quantity > 0 ? '<i class="fa fa-check"></i> В наличии' : '<i class="fa fa-times"></i> Нет на складе' ?></p>
                                 <p><b>Брэнд:</b>&nbsp;<?= $brand->name ?></p>
@@ -51,7 +58,7 @@
                                 <?php endif ?>
                                 <?php if ($product->age): ?>
                                     <p><b>Возраст: </b>&nbsp;<?= $product->age ?></p>
-                                <?php endif ?>`
+                                <?php endif ?>
                                 <div class="row">
                                     <div class="col-xs-11">
                                         <div class="navigation">
@@ -79,7 +86,7 @@
                                                         <div class="productinfo text-center">
                                                             <a href="/catalog/product/<?= $same[$i]->slug ?>" style="display:block;">
                                                                 <img src="/images/home/recommend1.jpg" alt=""/>
-                                                                <h2><?= $same[$i]->retail_price ?> грн</h2>
+                                                                <h2><?= General::actualPrice($same[$i]) ?> грн</h2>
                                                                 <p><?= mb_strlen($same[$i]->name) > 27 ? mb_substr($same[$i]->name, 0, 25) . '...' : $same[$i]->name ?></p>
                                                             </a>
                                                             <button type="button" class="btn btn-default add-to-cart" data-to-cart="<?= $same[$i]->id ?>"><i class="fa fa-shopping-cart"></i>В корзину</button>
@@ -97,7 +104,7 @@
                                                         <div class="productinfo text-center">
                                                             <a href="/catalog/product/<?= $same[$i]->slug ?>" style="display:block;">
                                                                 <img src="/images/home/recommend1.jpg" alt=""/>
-                                                                <h2><?= $same[$i]->retail_price ?> грн</h2>
+                                                                <h2><?= General::actualPrice($same[$i]) ?> грн</h2>
                                                                 <p><?= mb_strlen($same[$i]->name) > 27 ? mb_substr($same[$i]->name, 0, 25) . '...' : $same[$i]->name ?></p>
                                                             </a>
                                                             <button type="button" class="btn btn-default add-to-cart" data-to-cart="<?= $same[$i]->id ?>"><i class="fa fa-shopping-cart"></i>В корзину</button>

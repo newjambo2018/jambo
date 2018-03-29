@@ -41,6 +41,45 @@ class General extends \Yii
         return General::getSession('auth_info');
     }
 
+    public static function isWholesale($client_id = false)
+    {
+        if (!$client_id) $client = self::getUser(); else $client = Client::find()
+            ->select('wholesale')
+            ->where(['id' => $client_id])
+            ->limit(1)
+            ->one();
+
+        return $client->wholesale;
+    }
+
+    public static function discount($price, $discount)
+    {
+        return $price - ($price / 100 * $discount);
+    }
+
+    /**
+     * @param ShopProducts $product |array
+     *
+     * @return float|int
+     */
+    public static function actualPrice($product, $client_id = false)
+    {
+        if (!$client_id) $client = self::getUser(); else $client = Client::find()
+            ->where(['id' => $client_id])
+            ->limit(1)
+            ->one();
+
+        if ($client->wholesale) {
+            $price = is_array($product) ? $product['wholesale_price'] : $product->wholesale_price;
+
+            return self::discount($price, self::getUser()->wholesale_discount);
+        } else {
+            $price = is_array($product) ? $product['retail_price'] : $product->retail_price;
+
+            return self::discount($price, self::getUser()->retail_discount);
+        }
+    }
+
     public static function setFlash($key, $value = true, $removeAfterAccess = true)
     {
         return Yii::$app->session->addFlash($key, $value, $removeAfterAccess);

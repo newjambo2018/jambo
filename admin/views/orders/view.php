@@ -75,7 +75,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 'format'    => 'raw',
                 'label'     => 'Сумма скидки',
                 'value'     => function ($data) {
-                    return '<span style="color: red;">-' . $data->sum_discount . ' грн</span>';
+                    return '<span style="color: red;">-<span id="total_sum_discount">' . $data->sum_discount . '</span> грн</span>';
                 }
             ],
             //            'delivery',
@@ -151,7 +151,11 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 }, function (data) {
                     if (data !== 'error') {
                         notify('Информация обновлена', 'success');
-                        $('#total_sum').html(data);
+
+                        data = JSON.parse(data);
+
+                        $('#total_sum').html(data['sum']);
+                        $('#total_sum_discount').html(data['sum_discount']);
                     }
                     else notify('Ошибка! Информация НЕ обновлена! Попробуйте еще раз.', 'error')
                 }
@@ -168,7 +172,11 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                     if (data !== 'error') {
                         notify('Позиция удалена', 'success');
                         $('[data-order-item=' + _this.data('delete') + ']').remove();
-                        $('#total_sum').html(data);
+
+                        data = JSON.parse(data);
+
+                        $('#total_sum').html(data['sum']);
+                        $('#total_sum_discount').html(data['sum_discount']);
                     }
                     else notify('Ошибка! Попробуйте еще раз.', 'error')
                 }
@@ -190,6 +198,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                         $('.order_items_list').append(data['data']);
 
                         $('#total_sum').html(data['sum']);
+                        $('#total_sum_discount').html(data['sum_discount']);
                     }
                     else notify(data['message'], 'error')
                 }

@@ -44,13 +44,18 @@ class CheckoutController extends CommonController
             $items_in_query = implode(', ', $items_in);
 
             $items = ShopProducts::find()
-                ->select('id, retail_price')
                 ->where("id IN ({$items_in_query})")
                 ->all();
 
             $sum = 0;
+            $sum_discount = 0;
 
-            foreach ($items as $item) $sum += $item->retail_price * $items_array[$item->id];
+            foreach ($items as $item) {
+                $price = General::actualPrice($item);
+                $sum += $price * $items_array[$item->id];
+
+                $sum_discount += (General::isWholesale() ? $item->wholesale_price - $price : $item->retail_price - $price);
+            }
 
             $client = General::getUser(1) ?: Client::find()
                 ->where(['email' => General::post('email')])
@@ -68,9 +73,10 @@ class CheckoutController extends CommonController
             $order->created_at = time();
             $order->items = json_encode($items_array);
             $order->sum = $sum;
+            $order->sum_discount = $sum_discount;
             $order->address = General::post('address');
 
-            if($order->save()) {
+            if ($order->save()) {
                 Carts::truncate();
 
                 General::setFlash('success', '<b><i class="fa fa-check-circle"></i> Успех!</b> Ваш заказ оформлен успешно. Вскоре с Вами свяжется наш менеджер.');
