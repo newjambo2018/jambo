@@ -154,13 +154,13 @@ use app\models\General;
                                         <div class="checkbox checkbox-circle">
                                             <a href="?<?= $_GET ? http_build_query($_GET) . '&' : '' ?>gender=m" class="gender-filter">
                                                 <input id="checkbox7" type="checkbox" <?= $_GET['gender'] == 'm' ? 'checked' : '' ?>>
-                                                <span for="checkbox7" style="font-weight: 300">Мальчик&nbsp;<i class="fas fa-male"></i></span>
+                                                <span for="checkbox7" style="font-weight: 300" class="gender-btn">Мальчик&nbsp;<i class="fas fa-male"></i></span>
                                             </a>
                                         </div>
                                         <div class="checkbox checkbox-circle" style="margin-top: 10px">
                                             <a href="?<?= $_GET ? http_build_query($_GET) . '&' : '' ?>gender=f" class="gender-filter">
                                                 <input id="checkbox8" type="checkbox" <?= $_GET['gender'] == 'f' ? 'checked' : '' ?> >
-                                                <span for="checkbox8" style="font-weight: 300">Девочка&nbsp;<i class="fas fa-female"></i></span>
+                                                <span for="checkbox8" style="font-weight: 300" class="gender-btn">Девочка&nbsp;<i class="fas fa-female"></i></span>
                                             </a>
                                         </div>
                                     </div>
@@ -228,7 +228,12 @@ use app\models\General;
                                     </h6>
                                     <h6>Артикул: <?= $product['vendor_code'] ?></h6>
                                     <p><?= mb_strlen($product['name']) > 27 ? mb_substr($product['name'], 0, 27) . '...' : $product['name'] ?></p>
-                                    <a class="btn btn-default add-to-cart" data-to-cart="<?= $product['id'] ?>"><i class="fa fa-shopping-cart"></i><span>В корзину</span></a>
+                                    <div>
+                                        <div>
+                                            <input type="number" value="1" min="1" data-item-quantity="<?= $product['id'] ?>" class="qtyinput">
+                                        </div>
+                                        <a class="btn btn-default add-to-cart" data-quantity="s" data-to-cart="<?= $product['id'] ?>"><i class="fa fa-shopping-cart"></i><span>В корзину</span></a>
+                                    </div>
                                 </div>
 
                                 <?php if ($product['brand'] === 3): ?>
