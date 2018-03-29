@@ -228,8 +228,12 @@ use app\models\General;
                                     </h6>
                                     <h6>Артикул: <?= $product['vendor_code'] ?></h6>
                                     <p><?= mb_strlen($product['name']) > 27 ? mb_substr($product['name'], 0, 27) . '...' : $product['name'] ?></p>
-                                    <input type="number" name="item[1]" value="1" data-price-change="180" min="1" max="10" class="qtyinput">
-                                    <a class="btn btn-default add-to-cart" data-to-cart="<?= $product['id'] ?>"><i class="fa fa-shopping-cart"></i><span>В корзину</span></a>
+                                    <div>
+                                        <div>
+                                            <input type="number" name="item[1]" value="1" data-price-change="180" min="1" max="10" class="qtyinput">
+                                        </div>
+                                        <a class="btn btn-default add-to-cart" data-to-cart="<?= $product['id'] ?>"><i class="fa fa-shopping-cart"></i><span>В корзину</span></a>
+                                    </div>
                                 </div>
 
                                 <?php if ($product['brand'] === 3): ?>
