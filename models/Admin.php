@@ -58,8 +58,13 @@ class Admin extends \yii\db\ActiveRecord
     /**
      * @return Admin
      */
-    public static function get()
+    public static function get($from_db = false)
     {
+        if ($from_db) return self::find()
+            ->where(['id' => Admin::get()->id])
+            ->limit(1)
+            ->one();
+
         return General::getSession('admin_info');
     }
 

@@ -262,6 +262,12 @@
                         </a>
                     </li>
                 <?php endif ?>
+                <li class="">
+                    <a href="/admin/default/integration">
+                        <i class="fab fa-telegram"></i>
+                        <span class="title">Интеграция</span>
+                    </a>
+                </li>
                 <li>
                     <a href="/admin/orders">
                         <i class="fa fa-database"></i>
