@@ -77,4 +77,43 @@ class Admin extends \yii\db\ActiveRecord
     {
         return General::getSession('admin_info')->is_superuser;
     }
+
+    public static function sendTelegramNotification($chat_id, $message)
+    {
+        $telegram = new Telegram();
+
+        $telegram->sendMessage($chat_id, $message);
+    }
+
+
+    /**
+     * @param ShopOrder $order
+     */
+    public static function orderNotification($order)
+    {
+        $items_count = count(json_decode($order->items, 1));
+        $client = Client::find()
+            ->where(['id' => $order->client_id])
+            ->limit(1)
+            ->one();
+
+        $message = "Новый заказ!
+
+🎁 Количество позиций: $items_count
+💰 Сумма заказа: $order->sum грн
+🏷 Скидка: -$order->sum_discount грн
+";
+        $message .= '👤 Клиент: ' . $order->name . ($client ? " (#$client->id)" : "") . "\n";
+        $message .= '📞 Телефон: ' . $order->phone . "\n";
+
+        if($client->wholesale) $message .= "\n☝️ Опт";
+        else $message .= "\n☝️ Розница";
+
+        $admin = Admin::find()
+            ->where(['id' => $order->manager_id])
+            ->limit(1)
+            ->one();
+
+        if ($admin && $telegram_id = $admin->telegram_id) self::sendTelegramNotification($telegram_id, $message);
+    }
 }

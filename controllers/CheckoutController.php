@@ -83,6 +83,8 @@ class CheckoutController extends CommonController
                 if ($order->validate() && $order->save()) {
                     Carts::truncate();
 
+                    Admin::orderNotification($order);
+
                     General::setFlash('success', '<b><i class="fa fa-check-circle"></i> Успех!</b> Ваш заказ оформлен успешно. Вскоре с Вами свяжется наш менеджер.');
 
                     return $this->redirect('/');
