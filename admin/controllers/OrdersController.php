@@ -64,8 +64,16 @@ class OrdersController extends AdminController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        if ($model->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return $this->redirect('/admin/orders');
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -105,6 +113,13 @@ class OrdersController extends AdminController
     {
         $model = $this->findModel($id);
 
+
+        if ($model->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return $this->redirect('/admin/orders');
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -125,8 +140,15 @@ class OrdersController extends AdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)
-            ->delete();
+        $model = $this->findModel($id);
+
+        if ($model->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return $this->redirect('/admin/orders');
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -156,6 +178,13 @@ class OrdersController extends AdminController
             ->limit(1)
             ->one();
 
+
+        if ($order->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return 'error';
+        }
+
         $items = json_decode($order->items, 1);
         Yii::warning(print_r([$item_id, $items], 1));
 
@@ -184,6 +213,12 @@ class OrdersController extends AdminController
             ->where(['id' => $order_id])
             ->limit(1)
             ->one();
+
+        if ($order->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return 'error';
+        }
 
         $items = json_decode($order->items, 1);
         if (key_exists($item_id, $items)) unset($items[$item_id]);
@@ -237,6 +272,12 @@ class OrdersController extends AdminController
             ->where(['id' => $order_id])
             ->limit(1)
             ->one();
+
+        if ($order->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return 'error';
+        }
 
         $new_item = ShopProducts::find()
             ->where(['vendor_code' => $vendor_code])

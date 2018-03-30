@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
  */
 class AdminsController extends AdminController
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
