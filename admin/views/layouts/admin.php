@@ -308,12 +308,16 @@
                 <li class="">
                     <a href="javascript:;">
                         <i class="fa fa-suitcase"></i>
-                        <span class="title">Dropdown</span>
+                        <span class="title">Прочие настройки</span>
                         <span class="fa fa-arrow-down pull-right" style="margin-top: 15px;margin-right: 15px"></span>
                     </a>
                     <ul class="sub-menu">
+
                         <li>
-                            <a class="" href="#!">Test</a>
+                            <a href="/admin/cities">
+                                <i class="fa fa-map-marker" style="width: 25px;"></i>
+                                <span class="title"> Города</span>
+                            </a>
                         </li>
                         <li>
                             <a class="" href="#!">Test</a>
