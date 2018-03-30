@@ -10,7 +10,7 @@ use Yii;
  * @property int    $id
  * @property string $username    +
  * @property string $password    +
- * @property string $salt    +
+ * @property string $salt        +
  * @property string $email       +
  * @property string $first_name  +
  * @property string $last_name   +
@@ -90,5 +90,22 @@ class Client extends \yii\db\ActiveRecord
         $calc = hash_pbkdf2($algo, $password, $salt, (int)$iter, 32, true);
 
         return hash_equals($calc, base64_decode($hash));
+    }
+
+    public function restorePassword()
+    {
+        $this->salt = General::newToken();
+        $new_password = Yii::$app->security->generateRandomString(8);
+        $this->password = md5($this->salt . ':' . md5($new_password));
+
+        $this->save();
+
+        Yii::$app->mailer->compose('restore', [
+            'client'   => $this,
+            'password' => $new_password
+        ])
+            ->setTo($this->email)
+            ->setSubject('Восставновление пароля на JAMBO')
+            ->send();
     }
 }

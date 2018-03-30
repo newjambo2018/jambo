@@ -27,6 +27,11 @@ $delivery = \app\models\ShopDelivery::find()
 
 $delivery_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'name');
 $delivery_price_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'price');
+
+$delivery_options = '';
+foreach ($delivery_array as $key => $item) {
+    $delivery_options .= "<option value='$key' " . ($key === $model->delivery ? "selected" : "") . ">$item</option>";
+}
 ?>
 <div class="shop-order-view">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -108,16 +113,19 @@ $delivery_price_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'price');
             [
                 'attribute' => 'delivery',
                 'format'    => 'raw',
-                'value'     => function ($data) use ($delivery_array) {
-
-                    return '<i class="fa fa-truck"></i> ' . ($delivery_array[$data->delivery] . '' ?: 'Нет');
+                'value'     => function ($data) use ($delivery_array, $delivery_options) {
+                    return '<i class="fa fa-truck"></i> 
+                            <select data-delivery-change>
+                                ' . $delivery_options . '
+                            </select>
+                            ';
                 }
             ],
             [
                 'attribute' => 'delivery_price',
                 'format'    => 'raw',
                 'value'     => function ($data) use ($delivery_price_array) {
-                    return '<i class="fa fa-money-bill-alt"></i> ' . (number_format($delivery_price_array[$data->delivery], 2) . ' грн' ?: 'Нет');
+                    return '<i class="fa fa-money-bill-alt"></i> <span id="delivery_price">' . (number_format($delivery_price_array[$data->delivery], 2) . '</span> грн' ?: 'Нет');
                 }
             ],
             'address',
@@ -255,6 +263,19 @@ $delivery_price_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'price');
                 }, function (data) {
                     notify('Статус обновлен!<br><b>' + data + '</b>', 'success');
                     $('#current_status').html(data);
+                }
+            )
+        }).on('click', '[data-delivery-change]', function () {
+            var id = $(this).val();
+
+            $.get(
+                '/admin/orders/ajax-change-delivery',
+                {
+                    order_id: "<?= $model->id ?>",
+                    id: id
+                }, function (data) {
+                    notify('<i class="fa fa-truck"></i> Метод доставки обновлен!', 'success');
+                    $('#delivery_price').html(data);
                 }
             )
         })

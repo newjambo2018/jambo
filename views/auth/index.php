@@ -13,8 +13,11 @@
                         <!--								Запомнить меня-->
                         <!--							</span>-->
                         <button type="submit" name="auth" value="1" class="btn btn-default add-to-cart">Вход</button>
+                    </form>
+                    <form action="/auth/restore" method="post">
+                        <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
                         <h2>Забыли ваш пароль?</h2>
-                        <input type="email" placeholder="Ваш Email-адрес"/>
+                        <input type="email" name="email" placeholder="Ваш Email-адрес"/>
                         <button type="submit" class="btn btn-default add-to-cart">Восстановить</button>
                     </form>
                 </div><!--/login form-->

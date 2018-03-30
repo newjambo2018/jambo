@@ -5,6 +5,7 @@ namespace app\admin\controllers;
 use app\models\Admin;
 use app\models\Client;
 use app\models\General;
+use app\models\ShopDelivery;
 use app\models\ShopProducts;
 use Yii;
 use app\models\ShopOrder;
@@ -341,5 +342,16 @@ class OrdersController extends AdminController
         $model = $this->findModel($id);
 
         return $this->render('invoice', ['model' => $model]);
+    }
+
+    public function actionAjaxChangeDelivery($order_id, $id)
+    {
+        $model = $this->findModel($order_id);
+
+        $model->delivery = $id;
+
+        $delivery = ShopDelivery::findOne($id);
+
+        if ($model->save()) return number_format($delivery->price, '2');
     }
 }
