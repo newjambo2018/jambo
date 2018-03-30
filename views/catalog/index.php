@@ -108,7 +108,7 @@ use app\models\General;
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="?brand=3">Собсвтенный импорт</a></h4>
+                                    <h4 class="panel-title"><a href="?brand=own">Собственный импорт</a></h4>
                                 </div>
                             </div>
                             <div class="panel panel-default">
@@ -236,7 +236,7 @@ use app\models\General;
                                     </div>
                                 </div>
 
-                                <?php if ($product['brand'] === 3): ?>
+                                <?php if ($product['brand'] === 3 || $product['brand'] === 16): ?>
                                     <img src="/images/home/import.png" class="new" alt=""/>
                                 <?php endif ?>
 
