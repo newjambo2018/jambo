@@ -327,4 +327,19 @@ class OrdersController extends AdminController
 
         return ShopOrder::getAdminStatuses()[$status];
     }
+
+    public function actionExport($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('export', ['model' => $model]);
+    }
+
+    public function actionInvoice($id)
+    {
+        setlocale(LC_ALL, 'ru-RU');
+        $model = $this->findModel($id);
+
+        return $this->render('invoice', ['model' => $model]);
+    }
 }

@@ -315,12 +315,15 @@
 
                         <li>
                             <a href="/admin/cities">
-                                <i class="fa fa-map-marker" style="width: 25px;"></i>
+                                <i class="fa fa-map-marker" style="width: 25px;margin-top:10px"></i>
                                 <span class="title"> Города</span>
                             </a>
                         </li>
                         <li>
-                            <a class="" href="#!">Test</a>
+                            <a href="/admin/delivery">
+                                <i class="fa fa-truck" style="width: 25px;margin-top:10px"></i>
+                                <span class="title"> Доставка</span>
+                            </a>
                         </li>
                         <li>
                             <a class="" href="#!">Test</a>

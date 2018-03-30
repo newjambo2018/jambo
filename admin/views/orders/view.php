@@ -3,8 +3,15 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\ShopOrder */
+$items = [];
+$items_array = json_decode($model->items, 1);
+
+foreach (json_decode($model->items, 1) as $key => $value) $items[] = $key;
+
+$items_query = implode(', ', $items);
+if ($items_query) $items = \app\models\ShopProducts::find()
+    ->where("id IN ($items_query)")
+    ->all();
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Shop Orders', 'url' => ['index']];
@@ -14,19 +21,32 @@ $managers = \yii\helpers\ArrayHelper::map(\app\models\Admin::find()
     ->all(), 'id', 'name');
 $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
     ->all(), 'id', 'name');
+
+$delivery = \app\models\ShopDelivery::find()
+    ->all();
+
+$delivery_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'name');
+$delivery_price_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'price');
 ?>
 <div class="shop-order-view">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data'  => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method'  => 'post',
+                'confirm' => 'Вы уверены, что хотите удалить этот заказ? Это действие НЕВОЗМОЖНО отменить.',
             ],
+        ]) ?>
+
+        <?= Html::a('Экспорт в ABC', ['export', 'id' => $model->id], [
+            'class'    => 'btn btn-success',
+            'download' => 'order_export_' . $model->id . '.xml'
+        ]) ?>
+        <?= Html::a('Накладная', ['invoice', 'id' => $model->id], [
+            'class'  => 'btn btn-warning',
+            'target' => '_blank'
         ]) ?>
     </p>
 
@@ -85,9 +105,22 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                     return '<span style="color: red;">-<span id="total_sum_discount">' . $data->sum_discount . '</span> грн</span>';
                 }
             ],
-            //            'delivery',
-            //            'delivery_price',
-            //            'address',
+            [
+                'attribute' => 'delivery',
+                'format'    => 'raw',
+                'value'     => function ($data) use ($delivery_array) {
+
+                    return '<i class="fa fa-truck"></i> ' . ($delivery_array[$data->delivery] . '' ?: 'Нет');
+                }
+            ],
+            [
+                'attribute' => 'delivery_price',
+                'format'    => 'raw',
+                'value'     => function ($data) use ($delivery_price_array) {
+                    return '<i class="fa fa-money-bill-alt"></i> ' . (number_format($delivery_price_array[$data->delivery], 2) . ' грн' ?: 'Нет');
+                }
+            ],
+            'address',
             [
                 'attribute' => 'city',
                 'format'    => 'raw',
@@ -115,17 +148,6 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
 
     <div class="col-xs-12">
         <h3>Заказанные позиции</h3>
-        <?
-
-        $items = [];
-
-        foreach (json_decode($model->items, 1) as $key => $value) $items[] = $key;
-
-        $items_query = implode(', ', $items);
-        if ($items_query) $items = \app\models\ShopProducts::find()
-            ->where("id IN ($items_query)")
-            ->all();
-        ?>
 
         <div class="col-xs-12">
             <div class="col-xs-4">
