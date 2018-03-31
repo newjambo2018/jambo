@@ -108,7 +108,7 @@ use app\models\General;
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="?brand=3">Собсвтенный импорт</a></h4>
+                                    <h4 class="panel-title"><a href="?brand=own">Собственный импорт</a></h4>
                                 </div>
                             </div>
                             <div class="panel panel-default">
@@ -230,13 +230,13 @@ use app\models\General;
                                     <p><?= mb_strlen($product['name']) > 27 ? mb_substr($product['name'], 0, 27) . '...' : $product['name'] ?></p>
                                     <div>
                                         <div>
-                                            <input type="number" name="item[1]" value="1" data-price-change="180" min="1" max="10" class="qtyinput">
+                                            <input type="number" value="1" min="1" data-item-quantity="<?= $product['id'] ?>" class="qtyinput" style="background: #fefefe;">
                                         </div>
-                                        <a class="btn btn-default add-to-cart" data-to-cart="<?= $product['id'] ?>"><i class="fa fa-shopping-cart"></i><span>В корзину</span></a>
+                                        <a class="btn btn-default add-to-cart" data-quantity="s" data-to-cart="<?= $product['id'] ?>"><i class="fa fa-shopping-cart"></i><span>В корзину</span></a>
                                     </div>
                                 </div>
 
-                                <?php if ($product['brand'] === 3): ?>
+                                <?php if ($product['brand'] === 3 || $product['brand'] === 16): ?>
                                     <img src="/images/home/import.png" class="new" alt=""/>
                                 <?php endif ?>
 

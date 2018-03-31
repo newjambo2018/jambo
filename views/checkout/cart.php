@@ -106,7 +106,16 @@ use app\models\General;
                                         } ?>" required>
                                         <input type="email" placeholder="E-mail адрес*" name="email" value="<?= General::getUser()->email ?>" required>
                                         <input type="tel" placeholder="Номер телефона*" name="phone" value="<?= General::getUser()->phone ?>" id="phone" required>
-                                        <input type="text" placeholder="Адрес" name="address" value="">
+                                        <select name="delivery" id="delivery_toggler" style="height: 35px;margin-bottom: 10px;">
+                                            <option value="">Выберите способ доставки...</option>
+                                            <? foreach ($delivery as $item) { ?>
+                                                <option value="<?= $item->id ?>"><?= $item->name ?> <?= $item->price ? '(+' . number_format($item->price, 2) . ' грн.)' : '' ?></option>
+                                            <? } ?>
+                                        </select>
+                                        <? foreach ($delivery as $item) { ?>
+                                            <input type="hidden" id="dhi<?= $item->id ?>" value="<?= $item->display_address_field ?>">
+                                        <? } ?>
+                                        <input type="text" placeholder="Адрес" name="delivery_address" value="" id="address_hider" style="display: none;">
                                         <ul class="user_info">
                                             <li class="single_field">
                                                 <label>Ваш менеджер:</label>
@@ -152,7 +161,13 @@ use app\models\General;
 
     <script>
         window.onload = function (ev) {
-            update_total_sum()
+            update_total_sum();
+            $(document).on('change', '#delivery_toggler', function () {
+                if ($('#dhi' + $(this).val()).val() == 1)
+                    $('#address_hider').show();
+                else
+                    $('#address_hider').hide();
+            })
         }
     </script>
     <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">

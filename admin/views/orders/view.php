@@ -3,8 +3,15 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\ShopOrder */
+$items = [];
+$items_array = json_decode($model->items, 1);
+
+foreach (json_decode($model->items, 1) as $key => $value) $items[] = $key;
+
+$items_query = implode(', ', $items);
+if ($items_query) $items = \app\models\ShopProducts::find()
+    ->where("id IN ($items_query)")
+    ->all();
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Shop Orders', 'url' => ['index']];
@@ -14,19 +21,37 @@ $managers = \yii\helpers\ArrayHelper::map(\app\models\Admin::find()
     ->all(), 'id', 'name');
 $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
     ->all(), 'id', 'name');
+
+$delivery = \app\models\ShopDelivery::find()
+    ->all();
+
+$delivery_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'name');
+$delivery_price_array = \yii\helpers\ArrayHelper::map($delivery, 'id', 'price');
+
+$delivery_options = '';
+foreach ($delivery_array as $key => $item) {
+    $delivery_options .= "<option value='$key' " . ($key === $model->delivery ? "selected" : "") . ">$item</option>";
+}
 ?>
 <div class="shop-order-view">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data'  => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method'  => 'post',
+                'confirm' => 'Вы уверены, что хотите удалить этот заказ? Это действие НЕВОЗМОЖНО отменить.',
             ],
+        ]) ?>
+
+        <?= Html::a('Экспорт в ABC', ['export', 'id' => $model->id], [
+            'class'    => 'btn btn-success',
+            'download' => 'order_export_' . $model->id . '.xml'
+        ]) ?>
+        <?= Html::a('Накладная', ['invoice', 'id' => $model->id], [
+            'class'  => 'btn btn-warning',
+            'target' => '_blank'
         ]) ?>
     </p>
 
@@ -85,9 +110,25 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                     return '<span style="color: red;">-<span id="total_sum_discount">' . $data->sum_discount . '</span> грн</span>';
                 }
             ],
-            //            'delivery',
-            //            'delivery_price',
-            //            'address',
+            [
+                'attribute' => 'delivery',
+                'format'    => 'raw',
+                'value'     => function ($data) use ($delivery_array, $delivery_options) {
+                    return '<i class="fa fa-truck"></i> 
+                            <select data-delivery-change>
+                                ' . $delivery_options . '
+                            </select>
+                            ';
+                }
+            ],
+            [
+                'attribute' => 'delivery_price',
+                'format'    => 'raw',
+                'value'     => function ($data) use ($delivery_price_array) {
+                    return '<i class="fa fa-money-bill-alt"></i> <span id="delivery_price">' . (number_format($delivery_price_array[$data->delivery], 2) . '</span> грн' ?: 'Нет');
+                }
+            ],
+            'address',
             [
                 'attribute' => 'city',
                 'format'    => 'raw',
@@ -115,17 +156,6 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
 
     <div class="col-xs-12">
         <h3>Заказанные позиции</h3>
-        <?
-
-        $items = [];
-
-        foreach (json_decode($model->items, 1) as $key => $value) $items[] = $key;
-
-        $items_query = implode(', ', $items);
-        if ($items_query) $items = \app\models\ShopProducts::find()
-            ->where("id IN ($items_query)")
-            ->all();
-        ?>
 
         <div class="col-xs-12">
             <div class="col-xs-4">
@@ -233,6 +263,19 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 }, function (data) {
                     notify('Статус обновлен!<br><b>' + data + '</b>', 'success');
                     $('#current_status').html(data);
+                }
+            )
+        }).on('click', '[data-delivery-change]', function () {
+            var id = $(this).val();
+
+            $.get(
+                '/admin/orders/ajax-change-delivery',
+                {
+                    order_id: "<?= $model->id ?>",
+                    id: id
+                }, function (data) {
+                    notify('<i class="fa fa-truck"></i> Метод доставки обновлен!', 'success');
+                    $('#delivery_price').html(data);
                 }
             )
         })

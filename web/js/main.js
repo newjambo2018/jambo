@@ -38,6 +38,7 @@ $(document).on('click', '[data-to-cart]', function () {
     _this.find('i').removeClass('fa-shopping-cart').addClass('fa-spin fa-spinner');
 
     if (_this.data('quantity') === 'y') _quantity = $('#quantity-field').val();
+    if (_this.data('quantity') === 's') _quantity = $('[data-item-quantity=' + _this.data('to-cart') + ']').val();
 
     $.get(
         '/catalog/to-cart',

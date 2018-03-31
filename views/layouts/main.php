@@ -99,7 +99,7 @@
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="/catalog">Каталог</a></li>
                                     <li><a href="/catalog?stock=1">Акция</a></li>
-                                    <li><a href="/catalog?brand=3">Собственный импорт</a></li>
+                                    <li><a href="/catalog?brand=own">Собственный импорт</a></li>
                                     <li><a href="/catalog?new=1">Новинки</a></li>
                                     <li><a href="/checkout/cart">Корзина</a></li>
                                     <?php if (!\app\models\General::getSession('auth')): ?>

@@ -2,8 +2,10 @@
 
 namespace app\admin\controllers;
 
+use app\models\Admin;
 use app\models\Client;
 use app\models\General;
+use app\models\ShopDelivery;
 use app\models\ShopProducts;
 use Yii;
 use app\models\ShopOrder;
@@ -40,7 +42,12 @@ class OrdersController extends AdminController
     public function actionIndex()
     {
         $searchModel = new OrdersSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $admin = Admin::get();
+        $params = Yii::$app->request->queryParams;
+
+        if (!$admin->is_superuser) $params['OrdersSearch']['manager_id'] = $admin->id;
+
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel'  => $searchModel,
@@ -58,8 +65,16 @@ class OrdersController extends AdminController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        if ($model->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return $this->redirect('/admin/orders');
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -99,6 +114,13 @@ class OrdersController extends AdminController
     {
         $model = $this->findModel($id);
 
+
+        if ($model->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return $this->redirect('/admin/orders');
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -119,8 +141,15 @@ class OrdersController extends AdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)
-            ->delete();
+        $model = $this->findModel($id);
+
+        if ($model->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return $this->redirect('/admin/orders');
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -150,6 +179,13 @@ class OrdersController extends AdminController
             ->limit(1)
             ->one();
 
+
+        if ($order->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return 'error';
+        }
+
         $items = json_decode($order->items, 1);
         Yii::warning(print_r([$item_id, $items], 1));
 
@@ -178,6 +214,12 @@ class OrdersController extends AdminController
             ->where(['id' => $order_id])
             ->limit(1)
             ->one();
+
+        if ($order->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return 'error';
+        }
 
         $items = json_decode($order->items, 1);
         if (key_exists($item_id, $items)) unset($items[$item_id]);
@@ -232,6 +274,12 @@ class OrdersController extends AdminController
             ->limit(1)
             ->one();
 
+        if ($order->manager_id !== Admin::get()->id && !Admin::get()->is_superuser) {
+            General::setFlash('errors', 'У вас нет доступа к этому заказу');
+
+            return 'error';
+        }
+
         $new_item = ShopProducts::find()
             ->where(['vendor_code' => $vendor_code])
             ->limit(1)
@@ -279,5 +327,31 @@ class OrdersController extends AdminController
         ShopOrder::updateAll(['status' => $status], ['id' => $order_id]);
 
         return ShopOrder::getAdminStatuses()[$status];
+    }
+
+    public function actionExport($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('export', ['model' => $model]);
+    }
+
+    public function actionInvoice($id)
+    {
+        setlocale(LC_ALL, 'ru-RU');
+        $model = $this->findModel($id);
+
+        return $this->render('invoice', ['model' => $model]);
+    }
+
+    public function actionAjaxChangeDelivery($order_id, $id)
+    {
+        $model = $this->findModel($order_id);
+
+        $model->delivery = $id;
+
+        $delivery = ShopDelivery::findOne($id);
+
+        if ($model->save()) return number_format($delivery->price, '2');
     }
 }

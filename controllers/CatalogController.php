@@ -48,7 +48,9 @@ class CatalogController extends CommonController
             $query = $query->andWhere(['gender' => ($gender === 'm' ? 'Мальчик' : 'Девочка')]);
         }
 
-        if ($brand) {
+        if ($brand === 'own') {
+            $query = $query->andWhere(['or', ['brand' => 3], ['brand' => 16]]);
+        } else if ($brand) {
             $query = $query->andWhere(['brand' => $brand]);
         }
 

@@ -18,7 +18,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
 <div class="shop-order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -81,6 +81,8 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
                 'attribute' => 'city',
                 'format'    => 'raw',
                 'label'     => 'Город',
+                'filter'    => \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
+                    ->all(), 'id', 'name'),
                 'value'     => function ($data) use ($cities) {
                     return $cities[$data->city];
                 }
@@ -89,6 +91,7 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
             [
                 'attribute' => 'status',
                 'format'    => 'raw',
+                'filter'    => \app\models\ShopOrder::getStatuses(),
                 'value'     => function ($data) {
                     return '<div class="text-center">' . \app\models\ShopOrder::getAdminStatuses()[$data->status] . '</div>';
                 }
@@ -96,8 +99,14 @@ $cities = \yii\helpers\ArrayHelper::map(\app\models\ShopCities::find()
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'Actions',
+                'format' => 'raw',
+                'value'     => function ($data) {
+                    return "<a href=\"/admin/orders/view?id={$data->id}\" title=\"View\" aria-label=\"View\" data-pjax=\"0\"><span class=\"glyphicon glyphicon-eye-open\"></span></a> 
+                            <a href=\"/admin/orders/update?id={$data->id}\" title=\"Update\" aria-label=\"Update\" data-pjax=\"0\"><span class=\"glyphicon glyphicon-pencil\"></span></a> " . (\app\models\Admin::get()->is_superuser ? "<a href=\"/admin/orders/delete?id={$data->id}\" title=\"Delete\" aria-label=\"Delete\" data-pjax=\"0\" data-confirm=\"Are you sure you want to delete this item?\" data-method=\"post\"><span class=\"glyphicon glyphicon-trash\"></span></a>" : "");
+                }
+            ],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
 </div>

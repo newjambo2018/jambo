@@ -9,7 +9,7 @@ use app\models\General;
         <img src="/images/product-details/1.jpg" alt="" style="max-height: 50px">
     </div>
     <div class="col-xs-5" style="padding-top: 15px">
-        <?= $item->name ?> <b>Артикул: <?= $item->vendor_code ?></b>
+        <a href="/admin/products/view?id=<?= $item->id ?>" target="_blank"><?= $item->name ?> <b>Артикул: <?= $item->vendor_code ?></b></a>
     </div>
     <div class="col-xs-2 text-center" style="padding-top: 8px">
         <input type="number" class="form-control" data-item="<?= $model->id ?>" data-item-id="<?= $item->id ?>" value="<?= json_decode($model->items, 1)[$item->id] ?>">

@@ -15,6 +15,7 @@ use app\models\Carts;
 use app\models\Client;
 use app\models\General;
 use app\models\ShopCities;
+use app\models\ShopDelivery;
 use app\models\ShopOrder;
 use app\models\ShopProducts;
 use yii\web\Controller;
@@ -32,6 +33,9 @@ class CheckoutController extends CommonController
         $cart = Carts::find()
             ->with('item')
             ->where(['cart_id' => General::getCookie('c_id')])
+            ->all();
+
+        $delivery = ShopDelivery::find()
             ->all();
 
         if (\Yii::$app->request->isPost) {
@@ -74,8 +78,9 @@ class CheckoutController extends CommonController
             $order->items = json_encode($items_array);
             $order->sum = $sum;
             $order->sum_discount = $sum_discount;
-            $order->address = General::post('address');
             $order->phone = General::post('phone');
+            $order->delivery = General::post('delivery');
+            $order->address = General::post('delivery_address');
 
             if (!$order->phone || !$order->name || !$order->email) {
                 General::setFlash('errors', '<b><i class="fa fa-times-circle"></i> Ошибка!</b> Проверьте правильность заполнения полей!');
@@ -101,7 +106,7 @@ class CheckoutController extends CommonController
             ->where(['displayed' => 1])
             ->all();
 
-        return $this->render('cart', ['cart' => $cart, 'cities' => $cities, 'managers' => $managers]);
+        return $this->render('cart', ['cart' => $cart, 'cities' => $cities, 'managers' => $managers, 'delivery' => $delivery]);
     }
 
     public function actionRemoveFromCart($id)

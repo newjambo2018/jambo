@@ -69,6 +69,14 @@ class AuthController extends CommonController
                     ->limit(1)
                     ->one();
 
+                if($client->password === '_') {
+                    $client->restorePassword();
+                    
+                    General::setFlash('success', 'Проверьте свой адрес электронной почты, мы выслали пароль для доступа к новой версии JAMBO!');
+                    
+                    return $this->redirect('/auth');
+                }
+
                 if (!$client) {
                     General::setFlash('errors', 'Пользователь с такими данными не найден.');
 
@@ -98,6 +106,23 @@ class AuthController extends CommonController
 
         // TEST!
         return $this->render('index');
+    }
+
+    public function actionRestore()
+    {
+        $client = Client::findOne(['email' => General::post('email')]);
+
+        if(!$client) {
+            General::setFlash('errors', 'Ошибка! Мы не можем найти пользователя с таким e-mail. Попробуйте еще раз, либо зарегистрируйтесь!');
+
+            return $this->redirect('/auth');
+        }
+
+        $client->restorePassword();
+
+        General::setFlash('success', 'На Ваш e-mail отправлено письмо с инструкциями по восстановлению пароля.');
+
+        return $this->redirect('/auth');
     }
 
     public function actionActivate($u, $c)

@@ -8,6 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 $model->manager_id = \app\models\Admin::get()->id;
 $model->created_by_id = \app\models\Admin::get()->id;
+
+$managers = \yii\helpers\ArrayHelper::map(\app\models\Admin::findAll(['displayed' => 1]), 'id', 'name')
 ?>
 
 <div class="shop-order-form">
@@ -19,10 +21,10 @@ $model->created_by_id = \app\models\Admin::get()->id;
         ->textInput() ?>
 
     <?= $form->field($model, 'manager_id')
-        ->textInput(['class' => 'disabled form-control']) ?>
+        ->dropDownList($managers, ['class' => 'disabled form-control']) ?>
 
     <?= $form->field($model, 'created_by_id')
-        ->textInput(['class' => 'disabled form-control']) ?>
+        ->dropDownList($managers, ['class' => 'disabled form-control']) ?>
 
     <?= $form->field($model, 'name')
         ->textInput(['class' => 'disabled form-control']) ?>
@@ -57,9 +59,9 @@ $model->created_by_id = \app\models\Admin::get()->id;
                 }, function (data) {
                     data = JSON.parse(data);
 
-                    $('#shoporder-client_id').val(data['id']).trigger('change');
-                    $('#shoporder-name').val(data['name']).trigger('change');
-                    $('#shoporder-email').val(data['email']).trigger('change');
+                    $('#shoporder-client_id').val(data['id']);
+                    $('#shoporder-name').val(data['name']);
+                    $('#shoporder-email').val(data['email']);
                 }
             )
         })
