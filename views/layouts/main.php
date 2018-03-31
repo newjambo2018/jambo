@@ -35,8 +35,8 @@
                 <div class="col-sm-6">
                     <div class="contactinfo col-xs-8">
                         <ul class="nav nav-pills ">
-                            <li><a><i class="fa fa-phone"></i>&nbsp;Розница:&nbsp;(098) 705-05-05 </a></li>
-                            <li><a><i class="fa fa-phone""></i>&nbsp;Опт:&nbsp;(096) 650-69-29 </a></li>
+                            <li><a><i class="fa fa-phone"></i>&nbsp;(098) 705-05-05 </a></li>
+                            <li><a><i class="fa fa-phone"></i>&nbsp;(096) 650-69-29 </a></li>
                         </ul>
                     </div>
                 </div>
