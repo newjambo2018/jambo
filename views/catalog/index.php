@@ -217,7 +217,7 @@ use app\models\General;
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <a href="/catalog/product/<?= $product['slug'] ?>"><img src="/images/shop/product12.jpg" alt=""/></a>
+                                    <a href="/catalog/product/<?= $product['slug'] ?>"><img src="/sync/<?= $product['vendor_code'] ?>.jpg" alt=""/></a>
                                     <h2><?= General::actualPrice($product) ?> грн</h2>
                                     <h6>
                                         <?php if ($product['quantity']): ?>
