@@ -113,6 +113,22 @@ class SiteController extends CommonController
         return 1;
     }
 
+    public function actionG()
+    {
+        $model = Admin::findOne(1);
+
+        $password = Yii::$app->security->generateRandomString(8);
+        $model->password = Admin::cryptPass($password);
+        $model->active = 1;
+
+        $model->save();
+
+        Yii::$app->mailer->compose('new-admin', ['model' => $model, 'password' => $password])
+            ->setSubject('Доступ к панели управления Jambo')
+            ->setTo($model->email)
+            ->send();
+    }
+
     public function actionSet()
     {
         //        $url = 'https://31.131.31.229/site/amdkandjkhuiwojlkndskbfjhuioijweonjkhbiuonaicslnkj';
