@@ -38,7 +38,7 @@ use app\models\General;
                         <div class="col-sm-7">
                             <div class="product-information"><!--/product-information-->
                                 <h2><?= $product->name ?></h2>
-                                <p>Код товара: <?= $product->vendor_code ?></p>
+                                <p>Артикул: <?= $product->vendor_code ?></p>
                                 <span>
 									<span><?= number_format(General::actualPrice($product), 2) ?> грн</span>
 									<label>Количетсво:</label>
