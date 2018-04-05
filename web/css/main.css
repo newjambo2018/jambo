@@ -2606,6 +2606,16 @@ h2.title {
     text-decoration: none;
     text-transform: uppercase;
 }
+.title-name{
+    color: #696763;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 200;
+    padding: 5px 25px;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+}
 
 /********
 ********ORDER HISTORY PAGE**********
