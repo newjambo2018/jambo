@@ -1609,9 +1609,11 @@ h2.title {
     font-size: 18px;
 }
 
-.cart_product {
+.cart_product img {
     display: block;
     margin: 15px -70px 10px 25px;
+    height: 50px;
+    width: 50px;
 }
 
 .cart_quantity_button a {
