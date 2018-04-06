@@ -154,7 +154,7 @@ class CatalogController extends CommonController
             ->one();
 
         $same = ShopProducts::find()
-            ->select('slug, name, id, retail_price, wholesale_price')
+            ->select('slug, name, id, retail_price, wholesale_price, vendor_code')
             ->where(['sub_category' => $product->sub_category])
             ->orderBy('RAND()')
             ->limit(6)

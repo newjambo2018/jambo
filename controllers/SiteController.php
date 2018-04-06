@@ -6,6 +6,7 @@ use app\common\CommonController;
 use app\models\Admin;
 use app\models\Carts;
 use app\models\General;
+use app\models\SMTPV;
 use app\models\Telegram;
 use Yii;
 use yii\filters\AccessControl;
@@ -64,6 +65,7 @@ class SiteController extends CommonController
 
     public function actionProfile()
     {
+
         return $this->render('profile');
     }
 
@@ -127,6 +129,15 @@ class SiteController extends CommonController
             ->setSubject('Доступ к панели управления Jambo')
             ->setTo($model->email)
             ->send();
+    }
+
+    public function actionT()
+    {
+//        $this->layout = false;
+//
+//        return $this->render('t');
+        $string = 'i wish i had 3three some capitalization'; echo ucwords($string);
+         return var_dump((new SMTPV())->validate(['lisasdasdozo@one2mail.info']));
     }
 
     public function actionSet()

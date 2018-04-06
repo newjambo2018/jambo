@@ -39,7 +39,7 @@ class AuthController extends CommonController
                 $new_client->subscribed = 1;
                 $new_client->salt = General::newToken();
                 $new_client->password = md5($new_client->salt . ':' . md5(General::post('password')));
-                $new_client->wholesale = General::post('wholesale') === 'on' ? 1 : 0;
+                $new_client->wholesale = General::post('wholesale') === 'on' ? Client::WHOLESALE_AWAITING : 0;
 
                 if ($new_client->save()) {
                     $client_activation = new ClientActivation();
@@ -69,11 +69,11 @@ class AuthController extends CommonController
                     ->limit(1)
                     ->one();
 
-                if($client->password === '_') {
+                if ($client->password === '_') {
                     $client->restorePassword();
-                    
+
                     General::setFlash('success', 'Проверьте свой адрес электронной почты, мы выслали пароль для доступа к новой версии JAMBO!');
-                    
+
                     return $this->redirect('/auth');
                 }
 
@@ -112,7 +112,7 @@ class AuthController extends CommonController
     {
         $client = Client::findOne(['email' => General::post('email')]);
 
-        if(!$client) {
+        if (!$client) {
             General::setFlash('errors', 'Ошибка! Мы не можем найти пользователя с таким e-mail. Попробуйте еще раз, либо зарегистрируйтесь!');
 
             return $this->redirect('/auth');

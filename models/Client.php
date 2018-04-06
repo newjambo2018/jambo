@@ -22,9 +22,21 @@ use Yii;
  * @property int    $subscribed
  * @property int    $personal_manager
  * @property int    $wholesale
+ * @property int    $wholesale_timecycle
+ * @property int    $can_download_price
  */
 class Client extends \yii\db\ActiveRecord
 {
+    const WHOLESALE_AWAITING = 2;
+    const WHOLESALE_ACTIVE = 1;
+    const WHOLESALE_DECLINED = 3;
+
+    const WHOLESALE_STATUSES = [
+        self::WHOLESALE_AWAITING => '<span class="badge badge-warning"><i class="fa fa-spinner fa-spin"></i> Ожидает</span>',
+        self::WHOLESALE_ACTIVE   => '<span class="badge badge-success"><i class="fa fa-check-circle"></i> Подтвержден</span>',
+        self::WHOLESALE_DECLINED => '<span class="badge badge-danger"><i class="fa fa-times-circle"></i> Отвергнут</span>',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -40,11 +52,10 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             [['email', 'username', 'first_name', 'last_name', 'phone', 'password'], 'required'],
-            [['created_at', 'personal_manager'], 'integer'],
+            [['created_at', 'personal_manager', 'wholesale_timecycle', 'subscribed', 'is_active', 'wholesale', 'can_download_price'], 'integer'],
             [['retail_discount', 'wholesale_discount'], 'number'],
             [['username', 'email', 'first_name', 'last_name', 'password'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
-            [['subscribed', 'is_active', 'wholesale'], 'integer'],
         ];
     }
 
@@ -56,15 +67,16 @@ class Client extends \yii\db\ActiveRecord
         return [
             'id'                 => 'ID',
             'username'           => 'Username',
-            'email'              => 'Email',
-            'first_name'         => 'First Name',
-            'last_name'          => 'Last Name',
-            'is_active'          => 'Is Active',
-            'created_at'         => 'Created At',
-            'phone'              => 'Phone',
-            'retail_discount'    => 'Retail Discount',
-            'wholesale_discount' => 'Wholesale Discount',
-            'subscribed'         => 'Subscribed',
+            'email'              => 'E-mail',
+            'first_name'         => 'Имя',
+            'last_name'          => 'Фамилия',
+            'is_active'          => 'Активирован',
+            'created_at'         => 'Создан',
+            'phone'              => 'Телефон',
+            'retail_discount'    => 'Розничная скидка',
+            'wholesale_discount' => 'Оптовая скидка',
+            'subscribed'         => 'Подписан',
+            'wholesale'          => 'Оптовик',
         ];
     }
 

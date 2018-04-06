@@ -140,6 +140,14 @@ $brands = \yii\helpers\ArrayHelper::map(\app\models\ShopBrands::find()
                 'attribute' => 'slug',
                 'label'     => 'Ссылка'
             ],
+            [
+                'attribute' => 'image',
+                'label'     => 'Картинка',
+                'format'    => 'raw',
+                'value'     => function ($data) {
+                    return '<div class="text-center2"><img src="/sync/products/' . $data->vendor_code . '/0.jpg" style="max-height:200px"></div>';
+                }
+            ],
         ],
     ]) ?>
 

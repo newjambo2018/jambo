@@ -45,6 +45,7 @@ $managers = \yii\helpers\ArrayHelper::map(\app\models\Admin::find()
             [
                 'attribute' => 'personal_manager',
                 'format'    => 'raw',
+                'label'     => 'Менеджер',
                 'value'     => function ($data) use ($managers) {
                     return $data->personal_manager ? ('<i class="fa fa-user"></i> ' . $managers[$data->personal_manager] . ' (#' . $data->personal_manager . ')') : '';
                 }
@@ -53,7 +54,14 @@ $managers = \yii\helpers\ArrayHelper::map(\app\models\Admin::find()
             //'created_at',
             //'phone',
             //'retail_discount',
-            //'wholesale_discount',
+            [
+                'attribute' => 'wholesale',
+                'format'    => 'raw',
+                'label'     => 'Оптовик',
+                'value'     => function ($data) {
+                    return \app\models\Client::WHOLESALE_STATUSES[$data->wholesale] ?: 'Не оптовый';
+                }
+            ],
             //'subscribed',
 
             [

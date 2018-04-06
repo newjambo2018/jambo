@@ -126,15 +126,21 @@
 <div class="container">
     <? foreach (\app\models\General::getFlash() as $item) { ?>
         <div class="alert alert-danger" style="border-radius: 0">
-            <?= $item ?>
+            <i class="fa fa-check-circle"></i><?= $item ?>
         </div>
     <? } ?>
     <? foreach (\app\models\General::getFlash('success') as $item) { ?>
         <div class="alert alert-success" style="border-radius: 0">
-            <?= $item ?>
+            <i class="fa fa-times-circle"></i> <?= $item ?>
         </div>
     <? } ?>
+    <?php if (\app\models\General::getUser()->wholesale === \app\models\Client::WHOLESALE_AWAITING): ?>
+        <div class="alert alert-warning" style="border-radius: 0">
+            <i class="fa fa-info-circle"></i> Ваш ОПТОВЫЙ аккаунт еще не активирован. Наши менеджеры вскоре свяжутся с Вами и Вам будет предоставлен доступ к оптовому кабинету.
+        </div>
+    <?php endif ?>
 </div>
+
 <?= $content ?>
 
 <footer id="footer"><!--Footer-->

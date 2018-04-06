@@ -37,7 +37,7 @@ use app\models\General;
                     <? foreach ($cart as $item) { ?>
                         <tr class="inherit-cart-counter" id="cart_element_<?= $item->item->id ?>">
                             <td class="cart_product">
-                                <a href=""><img src="images/cart/one.png" alt=""></a>
+                                <a href=""><img src="/sync/products/<?= $item->item->vendor_code ?>/0.jpg" alt=""></a>
                             </td>
                             <td class="cart_description">
                                 <h4><a href=""><?= $item->item->name ?></a></h4>

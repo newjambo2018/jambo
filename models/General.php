@@ -25,6 +25,16 @@ class General extends \Yii
         return $post;
     }
 
+    public static function isWholesale($client_id = false)
+    {
+        if (!$client_id) $client = self::getUser(); else $client = Client::find()
+            ->select('wholesale')
+            ->where(['id' => $client_id])
+            ->limit(1)
+            ->one();
+
+        return ($client->wholesale === Client::WHOLESALE_ACTIVE && ($client->wholesale_timecycle ? ($client->wholesale_timecycle > time()) : true));
+    }
 
     /**
      * @return Client|bool
@@ -41,20 +51,14 @@ class General extends \Yii
         return General::getSession('auth_info');
     }
 
-    public static function isWholesale($client_id = false)
+    public static function getSession($data, $data2 = null, $data3 = null)
     {
-        if (!$client_id) $client = self::getUser(); else $client = Client::find()
-            ->select('wholesale')
-            ->where(['id' => $client_id])
-            ->limit(1)
-            ->one();
-
-        return $client->wholesale;
-    }
-
-    public static function discount($price, $discount)
-    {
-        return $price - ($price / 100 * $discount);
+        $session = \Yii::$app->session;
+        if (!$session->isActive) {
+            $session->open();
+        }
+        if (isset($data2)) return $session[$data][$data2]; else if (isset($data3)) return $session[$data][$data2][$data3]; else
+            return $session[$data];
     }
 
     /**
@@ -69,15 +73,24 @@ class General extends \Yii
             ->limit(1)
             ->one();
 
-        if ($client->wholesale) {
+        if ($client->wholesale === Client::WHOLESALE_ACTIVE && ($client->wholesale_timecycle ? ($client->wholesale_timecycle > time()) : true)) {
             $price = is_array($product) ? $product['wholesale_price'] : $product->wholesale_price;
 
-            return self::discount($price, self::getUser()->wholesale_discount);
+            if ($product->wholesale_stock) return $product->wholesale_price;
+
+            return self::discount($price, $client->wholesale_discount);
         } else {
             $price = is_array($product) ? $product['retail_price'] : $product->retail_price;
 
-            return self::discount($price, self::getUser()->retail_discount);
+            if ($product->retail_stock) return $product->retail_price;
+
+            return self::discount($price, $client->retail_discount);
         }
+    }
+
+    public static function discount($price, $discount)
+    {
+        return $price - ($price / 100 * $discount);
     }
 
     public static function setFlash($key, $value = true, $removeAfterAccess = true)
@@ -105,7 +118,6 @@ class General extends \Yii
 
         return (string)substr($result, -5);
     }
-
 
     public static function curl_call($url, $cmd, $timeout = 15)
     {
@@ -147,16 +159,6 @@ class General extends \Yii
 
         return $result;
 
-    }
-
-    public static function getSession($data, $data2 = null, $data3 = null)
-    {
-        $session = \Yii::$app->session;
-        if (!$session->isActive) {
-            $session->open();
-        }
-        if (isset($data2)) return $session[$data][$data2]; else if (isset($data3)) return $session[$data][$data2][$data3]; else
-            return $session[$data];
     }
 
     public static function setSession($alias, $data)

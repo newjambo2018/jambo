@@ -6,7 +6,7 @@ use app\models\General;
 
 <div class="col-xs-12" data-order-item="<?= $item->id ?>" style="border: 1px solid #eee;padding: 10px;margin-top: 10px;">
     <div class="col-xs-1 text-center">
-        <img src="/images/product-details/1.jpg" alt="" style="max-height: 50px">
+        <img src="/sync/products/<?= $item->vendor_code ?>/0.jpg" alt="" style="max-height: 50px">
     </div>
     <div class="col-xs-5" style="padding-top: 15px">
         <a href="/admin/products/view?id=<?= $item->id ?>" target="_blank"><?= $item->name ?> <b>Артикул: <?= $item->vendor_code ?></b></a>

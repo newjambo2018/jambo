@@ -34,11 +34,13 @@
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title"><a href="#"><i class="fas fa-arrow-circle-down"></i>&nbsp;Скачать прайс-лист</a></h4>
+                        <?php if (\app\models\General::getUser()->wholesale === \app\models\Client::WHOLESALE_ACTIVE): ?>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a href="#"><i class="fas fa-arrow-circle-down"></i>&nbsp;Скачать прайс-лист</a></h4>
+                                </div>
                             </div>
-                        </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

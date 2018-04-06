@@ -26,7 +26,7 @@ use app\models\General;
                     <div class="product-details"><!--product-details-->
                         <div class="col-sm-5">
                             <div class="view-product">
-                                <img src="/images/product-details/1.jpg" alt=""/>
+                                <img src="/sync/products/<?= $product->vendor_code ?>/0.jpg" alt=""/>
                                 <h3>Размер</h3>
                             </div>
                             <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -85,7 +85,7 @@ use app\models\General;
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
                                                             <a href="/catalog/product/<?= $same[$i]->slug ?>" style="display:block;">
-                                                                <img src="/images/home/recommend1.jpg" alt=""/>
+                                                                <img src="/sync/products/<?= $same[$i]->vendor_code ?>/0.jpg" alt=""/>
                                                                 <h2><?= General::actualPrice($same[$i]) ?> грн</h2>
                                                                 <p><?= mb_strlen($same[$i]->name) > 27 ? mb_substr($same[$i]->name, 0, 25) . '...' : $same[$i]->name ?></p>
                                                             </a>
@@ -102,7 +102,7 @@ use app\models\General;
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <a href="/catalog/product/<?= $same[$i]->slug ?>" style="display:block;">
+                                                            <a href="/catalog/product/<?= $same[$i]->vendor_code ?>" style="display:block;">
                                                                 <img src="/images/home/recommend1.jpg" alt=""/>
                                                                 <h2><?= General::actualPrice($same[$i]) ?> грн</h2>
                                                                 <p><?= mb_strlen($same[$i]->name) > 27 ? mb_substr($same[$i]->name, 0, 25) . '...' : $same[$i]->name ?></p>
