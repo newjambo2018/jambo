@@ -168,7 +168,7 @@
                             Test
                         </div>
                         <div class="col-md-2">
-                            О компании
+                           Test
                         </div>
                         <div class="col-md-2">
                             Сертификаты качества
