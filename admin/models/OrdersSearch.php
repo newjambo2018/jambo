@@ -80,6 +80,8 @@ class OrdersSearch extends ShopOrder
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
+        $query->orderBy('id DESC');
+
         return $dataProvider;
     }
 }

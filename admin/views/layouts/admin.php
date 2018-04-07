@@ -3,6 +3,9 @@
 /* @var $content string */
 \app\assets\AdminAsset::register($this);
 
+$unverified_users = \app\models\Client::find()
+    ->where(['wholesale' => \app\models\Client::WHOLESALE_AWAITING])
+    ->count();
 ?>
 <?php $this->beginPage() ?>
 
@@ -302,7 +305,10 @@
                 <li>
                     <a href="/admin/clients">
                         <i class="fa fa-users"></i>
-                        <span class="title">Пользователи <span class="badge"></span></span>
+                        <span class="title">Пользователи
+                            <?php if ($unverified_users): ?>
+                                <span class="badge badge-purple"><?= $unverified_users ?></span>
+                            <?php endif ?></span>
                     </a>
                 </li>
                 <li class="">
