@@ -159,7 +159,7 @@
                              Контакты магазина
                         </div>
                         <div class="col-md-2">
-                            Доставка и оплата
+                            Test
                         </div>
                         <div class="col-md-2">
                             О компании
