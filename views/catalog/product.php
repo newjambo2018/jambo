@@ -40,7 +40,14 @@ use app\models\General;
                                 <h2><?= $product->name ?></h2>
                                 <p>Артикул: <?= $product->vendor_code ?></p>
                                 <span>
-									<span><?= number_format(General::actualPrice($product), 2) ?> грн</span>
+									<span>
+                                        <?= number_format($actual_price = General::actualPrice($product), 2) ?>
+
+                                        <?php if ($actual_price != ($old_price = General::actualViewPrice($product))): ?>
+                                            <sup class="lined_price" style="color: red;"><?= $old_price ?></sup>
+                                        <?php endif ?> грн
+                                    </span>
+
 									<label>Количетсво:</label>
 									<input type="number" value="1" id="quantity-field" min="1" max="<?= $product->quantity ?>"/>
 									<button type="button" class="btn btn-fefault add-to-cart <?= $product->quantity < 1 ? 'btn-disabled' : '' ?>" data-to-cart="<?= $product->id ?>" data-quantity="y" style="margin-bottom: 8px;margin-left: 10px;">

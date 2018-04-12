@@ -25,15 +25,31 @@ class General extends \Yii
         return $post;
     }
 
-    public static function isWholesale($client_id = false)
+    /**
+     * @param ShopProducts $product |array
+     *
+     * @return float|int
+     */
+    public static function actualPrice($product, $client_id = false)
     {
         if (!$client_id) $client = self::getUser(); else $client = Client::find()
-            ->select('wholesale')
             ->where(['id' => $client_id])
             ->limit(1)
             ->one();
 
-        return ($client->wholesale === Client::WHOLESALE_ACTIVE && ($client->wholesale_timecycle ? ($client->wholesale_timecycle > time()) : true));
+        if ($client->wholesale === Client::WHOLESALE_ACTIVE && ($client->wholesale_timecycle ? ($client->wholesale_timecycle > time()) : true)) {
+            $price = is_array($product) ? $product['wholesale_price'] : $product->wholesale_price;
+
+            if ($product->wholesale_stock) return $product->wholesale_price;
+
+            return number_format(self::discount($price, $client->wholesale_discount), 2, '.', '');
+        } else {
+            $price = is_array($product) ? $product['retail_price'] : $product->retail_price;
+
+            if ($product->retail_stock) return $product->retail_price;
+
+            return number_format(self::discount($price, $client->retail_discount), 2, '.', '');
+        }
     }
 
     /**
@@ -61,36 +77,37 @@ class General extends \Yii
             return $session[$data];
     }
 
-    /**
-     * @param ShopProducts $product |array
-     *
-     * @return float|int
-     */
-    public static function actualPrice($product, $client_id = false)
+    public static function discount($price, $discount)
+    {
+        return $price - ($price / 100 * $discount);
+    }
+
+    public static function actualViewPrice($product, $client_id = false)
     {
         if (!$client_id) $client = self::getUser(); else $client = Client::find()
             ->where(['id' => $client_id])
             ->limit(1)
             ->one();
 
-        if ($client->wholesale === Client::WHOLESALE_ACTIVE && ($client->wholesale_timecycle ? ($client->wholesale_timecycle > time()) : true)) {
+        if (self::isWholesale()) {
             $price = is_array($product) ? $product['wholesale_price'] : $product->wholesale_price;
-
-            if ($product->wholesale_stock) return $product->wholesale_price;
-
-            return self::discount($price, $client->wholesale_discount);
         } else {
             $price = is_array($product) ? $product['retail_price'] : $product->retail_price;
-
-            if ($product->retail_stock) return $product->retail_price;
-
-            return self::discount($price, $client->retail_discount);
         }
+
+
+        return $price;
     }
 
-    public static function discount($price, $discount)
+    public static function isWholesale($client_id = false)
     {
-        return $price - ($price / 100 * $discount);
+        if (!$client_id) $client = self::getUser(); else $client = Client::find()
+            ->select('wholesale')
+            ->where(['id' => $client_id])
+            ->limit(1)
+            ->one();
+
+        return ($client->wholesale === Client::WHOLESALE_ACTIVE && ($client->wholesale_timecycle ? ($client->wholesale_timecycle > time()) : true));
     }
 
     public static function setFlash($key, $value = true, $removeAfterAccess = true)

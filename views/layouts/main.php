@@ -122,7 +122,7 @@
     <? } ?>
     <? foreach (\app\models\General::getFlash('success') as $item) { ?>
         <div class="alert alert-success" style="border-radius: 0">
-            <i class="fa fa-times-circle"></i> <?= $item ?>
+            <?= $item ?>
         </div>
     <? } ?>
     <?php if (\app\models\General::getUser()->wholesale === \app\models\Client::WHOLESALE_AWAITING): ?>
@@ -162,7 +162,7 @@
                             Сотрудничество
                         </div>
                         <div class="col-md-2">
-                             Контакты магазина
+                            Контакты магазина
                         </div>
                         <div class="col-md-2">
                             Test

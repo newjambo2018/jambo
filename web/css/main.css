@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background:;
+    background: none;
     position: relative;
     font-weight: 400px;
 }
@@ -742,11 +742,13 @@ h2.title:before {
     font-size: 12px;
     text-transform: uppercase;
 }
+
 .panel-body li a:hover {
     padding-left: 10px;
     text-decoration: underline;
     font-size: 14px;
 }
+
 .brands-name {
     border: 1px solid #F7F7F0;
     padding-bottom: 20px;
@@ -2599,14 +2601,16 @@ h2.title {
     pointer-events: none;
     background-color: grey !important;
 }
-.gender-btn{
+
+.gender-btn {
     color: #696763;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
 }
-.title-name{
+
+.title-name {
     color: #696763;
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
@@ -2620,13 +2624,35 @@ h2.title {
 /********
 ********ORDER HISTORY PAGE**********
  */
-.delete{
+.delete {
     padding-left: 15px;
 }
-.name-history{
+
+.name-history {
     color: #696763;
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     font-weight: 300;
     margin-bottom: 30px;
+}
+
+.lined_price {
+    white-space: pre;
+    position: relative;
+    display: inline-block;
+    font-size: 15px;
+}
+
+.lined_price:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    color: red;
+    width: 100%;
+    height: 0;
+    border-bottom: 2px solid red;
+    margin-left: 1px;
+    transform: rotate(-20deg);
 }

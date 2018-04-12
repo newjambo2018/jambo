@@ -18,8 +18,8 @@ use app\models\General;
                         <div class="carousel-inner">
                             <div class="item active">
                                 <div class="col-sm-6">
-                                    <h1><span>E</span>-SHOPPER</h1>
-                                    <h2>Free E-Commerce Template</h2>
+                                    <h1><span>J</span>AMBO</h1>
+                                    <h2>Лучшие игрушки</h2>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
@@ -30,7 +30,7 @@ use app\models\General;
                             </div>
                             <div class="item">
                                 <div class="col-sm-6">
-                                    <h1><span>E</span>-SHOPPER</h1>
+                                    <h1><span>J</span>AMBO</h1>
                                     <h2>100% Responsive Design</h2>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                                     <button type="button" class="btn btn-default get">Get it now</button>
@@ -44,7 +44,7 @@ use app\models\General;
                             <div class="item">
                                 <div class="col-sm-6">
                                     <h1><span>E</span>-SHOPPER</h1>
-                                    <h2>Free Ecommerce Template</h2>
+                                    <h2>Супер backend</h2>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
@@ -218,7 +218,15 @@ use app\models\General;
                             <div class="single-products">
                                 <div class="productinfo text-center">
                                     <a href="/catalog/product/<?= $product['slug'] ?>"><img src="/sync/products/<?= $product['vendor_code'] ?>/0.jpg" alt=""/></a>
-                                    <h2><?= General::actualPrice($product) ?> грн</h2>
+                                    <?
+                                    $actual_price = General::actualPrice($product);
+                                    ?>
+                                    <h2>
+                                        <span><?= $actual_price ?></span>
+                                        <?php if ($actual_price != ($old_price = General::actualViewPrice($product))): ?>
+                                            <sup class="lined_price" style="color: red;"><?= $old_price ?></sup>
+                                        <?php endif ?>
+                                        грн</h2>
                                     <h6>
                                         <?php if ($product['quantity']): ?>
                                             <span class="badge badge-secondary" style="background: #28a745">В наличии</span>

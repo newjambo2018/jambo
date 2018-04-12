@@ -106,7 +106,7 @@ use app\models\General;
                                         } ?>" required>
                                         <input type="email" placeholder="E-mail адрес*" name="email" value="<?= General::getUser()->email ?>" required>
                                         <input type="tel" placeholder="Номер телефона*" name="phone" value="<?= General::getUser()->phone ?>" id="phone" required>
-                                        <select name="delivery" id="delivery_toggler" style="height: 35px;margin-bottom: 10px;">
+                                        <select name="delivery" id="delivery_toggler" style="height: 35px;margin-bottom: 10px;" required>
                                             <option value="">Выберите способ доставки...</option>
                                             <? foreach ($delivery as $item) { ?>
                                                 <option value="<?= $item->id ?>"><?= $item->name ?> <?= $item->price ? '(+' . number_format($item->price, 2) . ' грн.)' : '' ?></option>
