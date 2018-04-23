@@ -48,7 +48,7 @@
             <div class="col-sm-5 col-sm-offset-2">
                 <div class="signup-form profile-form"><!--sign up form-->
                     <div style="text-align: center">
-                        <h3>Личные perch</h3>
+                        <h3>Личные perh</h3>
                     </div>
                     <form action="" method="post">
                         <input type="hidden" value="<?= Yii::$app->request->csrfToken ?>" name="_csrf">
