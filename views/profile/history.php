@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="page-header col-xs-12">
-                    <h4 style="font-size: 26px;">Ваша история заказов&nbsp;&nbsp;<i class="fas fa-history"></i></h4>
+                    <h4 style="font-size: 26px;">Моя история заказов&nbsp;&nbsp;<i class="fas fa-history"></i></h4>
                 </div>
             </div>
             <div class="col-sm-12 col-xs-12">
